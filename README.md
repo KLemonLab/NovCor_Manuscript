@@ -1,4 +1,4 @@
-# NovCor_Manuscript
+# NovCor Manuscript
 
 This repository contains only the rendered html files that allow for the public links included in the NovCor manuscript.
 
