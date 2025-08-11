@@ -1,0 +1,31 @@
+Genome,styled_Genome_old,styled_Genome
+Ctu_MSK207,Ctu MSK207,<span style='color:#002BFF;'>Ctu</span> MSK207
+Ctu_KPL3807,Ctu KPL3807,<span style='color:#002BFF;'>Ctu</span> KPL3807
+Ctu_SK141,Ctu SK141,<span style='color:#002BFF;'>Ctu</span> SK141
+Ctu_DSM_44922,"Ctu DSM 44922<sup style=""vertical-align: super;"">T</sup>","<span style='color:#002BFF;'>Ctu</span> DSM 44922<sup style=""vertical-align: super;"">T</sup>"
+Cmq_MSK144,Cmq MSK144,<span style='color:#39D9E5;'>Cmq</span> MSK144
+Cmq_c19Ua_121,"Cmq c19Ua 121<sup style=""vertical-align: super;"">T</sup>","<span style='color:#39D9E5;'>Cmq</span> c19Ua 121<sup style=""vertical-align: super;"">T</sup>"
+Cmq_KPL4083,Cmq KPL4083,<span style='color:#39D9E5;'>Cmq</span> KPL4083
+Cau_620_CAUR,Cau 620 CAUR,<span style='color:#39D9E5;'>Cau</span> 620 CAUR
+Cyo_MSK136,Cyo MSK136,<span style='color:#0A6003;'><span style='color:#0A6003;'>Cyo</span></span> MSK136
+Cyo_c21Ua_68,"Cyo c21Ua 68<sup style=""vertical-align: super;"">T</sup>","<span style='color:#0A6003;'><span style='color:#0A6003;'>Cyo</span></span> c21Ua 68<sup style=""vertical-align: super;"">T</sup>"
+Cyo_KPL2619,Cyo KPL2619,<span style='color:#0A6003;'><span style='color:#0A6003;'>Cyo</span></span> KPL2619
+Cha_CTNIH23,Cha CTNIH23,<span style='color:#0ABF00;'>Cha</span> CTNIH23
+Cha_CTNIH21,Cha CTNIH21,<span style='color:#0ABF00;'>Cha</span> CTNIH21
+Cha_CTNIH20,Cha CTNIH20,<span style='color:#0ABF00;'>Cha</span> CTNIH20
+Cha_CTNIH22,"Cha CTNIH22<sup style=""vertical-align: super;"">T</sup>","<span style='color:#0ABF00;'>Cha</span> CTNIH22<sup style=""vertical-align: super;"">T</sup>"
+Ccu_CTNIH19,Ccu CTNIH19,<span style='color:#FF00FF;'>Ccu</span> CTNIH19
+Ccu_c8Ua_181,"Ccu c8Ua 181<sup style=""vertical-align: super;"">T</sup>","<span style='color:#FF00FF;'>Ccu</span> c8Ua 181<sup style=""vertical-align: super;"">T</sup>"
+Cna_MSK071,Cna MSK071,<span style='color:#8200E7;'>Cna</span> MSK071
+Cna_KPL3649,Cna KPL3649,<span style='color:#8200E7;'>Cna</span> KPL3649
+Cke_CTNIH27,Cna CTNIH27,<span style='color:#8200E7;'>Cna</span> CTNIH27
+Cna_MSK194,Cna MSK194,<span style='color:#8200E7;'>Cna</span> MSK194
+Cna_KPL3804,"Cna KPL3804<sup style=""vertical-align: super;"">T</sup>","<span style='color:#8200E7;'>Cna</span> KPL3804<sup style=""vertical-align: super;"">T</sup>"
+Cke_LK1134,Cke LK1134,<span style='color:#8200E7;'><span style='color:#8200E7;'>Cke</span></span> LK1134
+Cke_EYE_437,Cke EYE_437,<span style='color:#8200E7;'><span style='color:#8200E7;'>Cke</span></span> EYE_437
+Cna_KPL2825,Cna KPL2825,<span style='color:#8200E7;'>Cna</span> KPL2825
+Cke_FDAARGOS_1055,Cke FDAARGOS 1055,<span style='color:#8200E7;'>Cke</span> FDAARGOS 1055
+Cna_MSK185,Cna MSK185,<span style='color:#8200E7;'>Cna</span> MSK185
+Cna_KPL4035,Cna KPL4035,<span style='color:#8200E7;'>Cna</span> KPL4035
+Cke_CTNIH24,Cna CTNIH24,<span style='color:#8200E7;'>Cna</span> CTNIH24
+Cna_KPL4072,Cna KPL4072,<span style='color:#8200E7;'>Cna</span> KPL4072

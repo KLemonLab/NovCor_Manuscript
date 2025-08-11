@@ -1,0 +1,31 @@
+genome_name,styled_genome_name
+Ctu_MSK207,Ctu MSK207
+Ctu_KPL3807,Ctu KPL3807
+Ctu_SK141,Ctu SK141
+Ctu_DSM_44922,Ctu DSM 44922<sup style="vertical-align: super;">T</sup>
+Cmq_MSK144,Cmq MSK144
+Cmq_c19Ua_121,Cmq c19Ua 121<sup style="vertical-align: super;">T</sup>
+Cmq_KPL4083,Cmq KPL4083
+Cau_620_CAUR,Cau 620 CAUR
+Cyo_MSK136,Cyo MSK136
+Cyo_c21Ua_68,Cyo c21Ua 68<sup style="vertical-align: super;">T</sup>
+Cyo_KPL2619,Cyo KPL2619
+Cha_CTNIH23,Cha CTNIH23
+Cha_CTNIH21,Cha CTNIH21
+Cha_CTNIH20,Cha CTNIH20
+Cha_CTNIH22,Cha CTNIH22<sup style="vertical-align: super;">T</sup>
+Ccu_CTNIH19,Ccu CTNIH19
+Ccu_c8Ua_181,Ccu c8Ua 181<sup style="vertical-align: super;">T</sup>
+Cna_MSK071,Cna MSK071
+Cna_KPL3649,Cna KPL3649
+Cke_CTNIH27,Cna CTNIH27
+Cna_MSK194,Cna MSK194
+Cna_KPL3804,Cna KPL3804<sup style="vertical-align: super;">T</sup>
+Cke_LK1134,Cke LK1134
+Cke_EYE_437,Cke EYE_437
+Cna_KPL2825,Cna KPL2825
+Cke_FDAARGOS_1055,Cke FDAARGOS 1055
+Cna_MSK185,Cna MSK185
+Cna_KPL4035,Cna KPL4035
+Cke_CTNIH24,Cna CTNIH24
+Cna_KPL4072,Cna KPL4072

@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Description of Corynebacterium nasorum sp. nov. and Corynebacterium hallucis sp. nov. isolated from human nasal passages and skin",
     "section": "",
-    "text": "Introduction\nThis repository includes the code used for bioinformatics and data analysis for the manuscript “Description of Corynebacterium nasorum sp. nov. and Corynebacterium hallucis sp. nov. isolated from human nasal passages and skin”.\nA preprint of this manuscript is available at bioRxiv.\n\nCode used to recover summary information for the included genomes from NCBI can be found here, with code for the corresponding custom Prokka annotations in here.\nDetailed code is also included for the ANI and dDDH analysis.\nAll the code used for construction of phylogenetic and phylogenomic trees is summarized here.\nAnalysis performed using Anvio is documented in here."
+    "text": "Introduction\nThis repository includes the code used for bioinformatics and data analysis for the manuscript “Description of Corynebacterium nasorum sp. nov. and Corynebacterium hallucis sp. nov. isolated from human nasal passages and skin”.\nA preprint of this manuscript is available at bioRxiv.\n\nCode used to recover summary information for the included genomes from NCBI can be found here, with code for the corresponding custom Prokka annotations in here. With the supplemental files used to list genomes included in each section of the analysis here.\nDetailed code is also included for the ANI and dDDH analysis.\nAll the code used for construction of phylogenetic and phylogenomic trees is summarized here.\nAnalysis performed using Anvio is documented in here."
   },
   {
     "objectID": "Methods_Genomes.html",
