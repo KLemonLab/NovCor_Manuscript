@@ -1,0 +1,13 @@
+# Introduction {.unnumbered .unlisted}
+
+This repository includes the code used for bioinformatics and data analysis for the manuscript **"Description of *Corynebacterium nasorum* sp. nov. and *Corynebacterium hallucis* sp. nov. isolated from human nasal passages and skin"**.
+
+A preprint of this manuscript is available at [bioRxiv](https://www.biorxiv.org/content/10.1101/2024.11.21.624533v1).
+
+-   Code for the custom Prokka annotations can be found in [here](https://klemonlab.github.io/NovCor_Manuscript/Methods_Prokka_Annotations.html). With the supplemental files used to list genomes included in each section of the analysis [here](https://github.com/KLemonLab/NovCor_Manuscript/tree/main/genome_lists).
+
+-   Detailed code is also included for the [ANI](https://klemonlab.github.io/NovCor_Manuscript/Methods_ANIs.html) and [dDDH](https://klemonlab.github.io/NovCor_Manuscript/Methods_dDDH.html) analysis.
+
+-   All the code used for construction of phylogenetic and phylogenomic trees is summarized [here](https://klemonlab.github.io/NovCor_Manuscript/Methods_Phylogenies.html).
+
+-   Analysis performed using Anvio is documented in [here](https://klemonlab.github.io/NovCor_Manuscript/Methods_Anvio.html).

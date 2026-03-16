@@ -1,0 +1,163 @@
+---
+execute:
+  eval: TRUE
+  message: FALSE
+  warning: FALSE
+---
+
+# Average Nucleotide Identity (ANI) {.unnumbered}
+
+```{r}
+library(tidyverse)
+library(reshape2)
+library(ggtext)
+library(viridis)
+library(plotly)
+```
+
+## pyANI
+
+We used 30 *Corynebacterium* genomes listed in `NovCor_ANI_GenomeList_v01.csv`. 
+
+Copy genomes of use to another directory: 
+```{bash, eval=FALSE}
+# Specify the CSV file
+csv_file="data/genome_lists/NovCor_ANI_GenomeList_v01.csv"
+
+# Specify the source directory
+source_dir="data/genomes"
+
+# Specify the destination directory
+dest_dir="data/pyani/genomes"
+
+# Read the CSV file line by line
+while IFS=, read -r file_name rest_of_line
+do
+    # Copy the file to the destination directory
+    cp "${source_dir}/${file_name}" "${dest_dir}"
+done < "$csv_file"
+```
+
+Run pyani:
+```{bash, eval=FALSE}
+#| eval: FALSE
+
+#conda activate pyani
+
+# Set paths
+path_i="data/pyani/genomes"
+path_o="data/pyani"
+
+average_nucleotide_identity.py -v -i "$path_i" \
+    -o "$path_o" -m ANIb
+```
+
+
+## Plot
+
+Create a plot from the `ANIb_percentage_identity.tab` file given by pyani.
+We match the ordering in `ANIb_percentage_identity.svg` by creating an ordering file `NovCor_pyANI_PlotOrder.txt`
+
+```{r}
+# Define the path of the input file
+input = "data/pyani/ANIb_output/ANIb_percentage_identity.tab"
+
+# Read the data
+ANI_data <- read.table(input, header = TRUE, sep = "\t")
+
+# Convert the data from wide format to long format
+ANI_data.long <- ANI_data %>%
+  # Rename the 'X' column to 'Genome1'
+  rename(Genome1 = X) %>%
+  pivot_longer(cols = -Genome1, names_to = "Genome2", values_to = "PercentIdentity")
+
+# Read the strain order from a CSV file and specify the order of the levels
+StrainOrder <- read_csv("data/genome_lists/NovCor_pyANI_PlotOrder_v02.txt")
+StrainOrder$Genome <- factor(StrainOrder$Genome, levels=rev(StrainOrder$Genome))
+
+# Join the ANI_data.long and StrainOrder data frames based on Genome1
+ANI_data.long <- left_join(ANI_data.long, StrainOrder, by = c("Genome1" = "Genome")) %>% 
+  rename(styled_Genome1 = styled_Genome) 
+
+# Convert the 'styled_Genome1' column to a factor and specify the order of the levels
+ANI_data.long$styled_Genome1 <- factor(ANI_data.long$styled_Genome1, levels=rev(StrainOrder$styled_Genome))
+
+# Join the ANI_data.long and StrainOrder data frames based on Genome2
+ANI_data.long <- left_join(ANI_data.long, StrainOrder, by = c("Genome2" = "Genome")) %>% 
+  rename(styled_Genome2 = styled_Genome) 
+
+# Convert the 'styled_Genome2' column to a factor and specify the order of the levels
+ANI_data.long$styled_Genome2 <- factor(ANI_data.long$styled_Genome2, levels=rev(StrainOrder$styled_Genome))
+```
+
+```{r}
+# Create a ggplot object with styled_Genome1 on the x-axis, styled_Genome2 on the y-axis, and fill color representing PercentIdentity
+pANI <- ggplot(ANI_data.long, aes(x = styled_Genome1, y = styled_Genome2, fill = PercentIdentity)) + 
+# Add a tile layer to the plot with specified width and height
+  geom_tile(width = 1.0, height = 1.0) +
+# Add text to each tile showing the rounded PercentIdentity value
+  geom_text(aes(label = sprintf("%.1f", round(PercentIdentity * 100, 1))), size = 3, colour = "black") +
+# Use the viridis color palette for the fill color and scale the labels to percent
+  scale_fill_viridis(option = "A", begin = 0.6, labels = function(x) sprintf("%.0f", x * 100)) + 
+# Set the position of the y-axis labels to the right
+  scale_y_discrete(position = "right") +
+# Set the plot title and remove the x and y axis labels
+  labs(x = NULL, y = NULL, title = NULL) +
+# Use a white background for the plot
+  theme_bw() +
+# Customize the plot theme
+  theme(axis.text.x = element_markdown(angle = 45, vjust = 1, hjust = 1, colour = "black", face = "bold"),
+        axis.text.y = element_markdown(colour = "black", face = "bold"),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        axis.ticks = element_blank(),
+        plot.margin = margin(0, 0.25, 0.25, 1, "cm"),
+        legend.position = c(1.12, -0.12), 
+        legend.direction = "horizontal",
+        legend.justification = c(1, 0)) +
+# Add a colorbar legend for the fill color with a specified title and position
+  guides(fill = guide_colourbar(title="% identity", title.position="top", title.hjust=0.5, barwidth=6))
+pANI
+```
+
+```{r}
+# Function to add colored rectangles to the plot
+add_rectangles_to_heatmap <- function(plot, levels, top, bottom, color) {
+  top_pos <- which(levels == top)
+  bottom_pos <- which(levels == bottom)
+
+  p_with_rect <- plot +
+    geom_rect(
+      aes(xmin = top_pos + 0.5, 
+          xmax = bottom_pos - 0.5,
+          ymin = top_pos + 0.5, 
+          ymax = bottom_pos - 0.5),
+      fill = NA,
+      color = color,
+      size = 1
+    )
+  
+  return(p_with_rect)
+}
+```
+
+```{r}
+genome_levels <- levels(StrainOrder$Genome)
+pANI <- add_rectangles_to_heatmap(pANI, genome_levels, "Ctu_MSK207", "Ctu_DSM_44922", "#002BFF") 
+pANI <- add_rectangles_to_heatmap(pANI, genome_levels, "Cmq_MSK144", "Cau_620_CAUR", "#39D9E5")  
+pANI <- add_rectangles_to_heatmap(pANI, genome_levels, "Cyo_MSK136", "Cyo_KPL2619", "#0A6003")  
+pANI <- add_rectangles_to_heatmap(pANI, genome_levels, "Cha_CTNIH23", "Cha_CTNIH22", "#0ABF00") 
+pANI <- add_rectangles_to_heatmap(pANI, genome_levels, "Ccu_CTNIH19", "Ccu_c8Ua_181", "#FF00FF") 
+pANI <- add_rectangles_to_heatmap(pANI, genome_levels, "Cna_MSK071", "Cna_KPL4072", "#8200E7")  
+pANI
+
+# Save the plot as PNG
+ggsave("data/pyani/Figure/NovCor_pyani.png", plot = pANI, width = 12, height = 9, dpi = 600)
+```
+
+
+
+
+
+

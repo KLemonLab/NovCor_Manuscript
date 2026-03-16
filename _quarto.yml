@@ -1,0 +1,39 @@
+project:
+  type: book
+  
+format:
+  html:
+    theme: flatly
+    code-tools: true
+    toc: true
+    toc-location: left
+    embed-resources: true
+    page-layout: full
+    grid:
+      sidebar-width: 350px
+
+book:
+  title: "Description of *Corynebacterium nasorum* sp. nov. and *Corynebacterium hallucis* sp. nov. isolated from human nasal passages and skin"
+  author:
+    - name: Tommy Tran
+    - name: Isabel Fernandez Escapa
+  date: last-modified
+  sidebar:
+    style: docked
+    background: "light"
+    collapse-level: 2
+  navbar:
+    background: "primary"
+    search: true
+    right:
+      - icon: github
+        href: https://github.com/KLemonLab/NovCor_Manuscript
+        aria-label: GitHub
+
+  reader-mode: true  
+
+bibliography: references.bib
+csl: references_style.csl
+    
+profile:
+  default: development
