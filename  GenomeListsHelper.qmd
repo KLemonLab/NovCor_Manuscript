@@ -1,0 +1,39 @@
+---
+execute:
+  eval: TRUE
+  message: FALSE
+  warning: FALSE
+---
+
+# Genome Lists Helper {.unnumbered}
+
+```{r}
+library(tidyverse)
+```
+
+## Set up paths
+
+```{r}
+FOLDER_PATH <- Sys.getenv("DATA_PATH") 
+genomes_list_folder <- file.path(FOLDER_PATH, "genome_lists")
+```
+
+```{r}
+genomes_28 <- read.csv(file.path(genomes_list_folder, "genome_list_28_Cna.csv"))
+genomes_30 <- read.csv(file.path(genomes_list_folder, "genome_list_30_CtuComplex.csv"))
+genomes_51 <- read.csv(file.path(genomes_list_folder, "genome_list_51_MainFigs.csv"))
+genomes_72 <- read.csv(file.path(genomes_list_folder, "genome_list_72_SuppFigure.csv"))
+```
+
+```{r}
+genomes_51 <- genomes_51 %>%
+  mutate(has_species_in_file_name =
+           str_detect(file_name, fixed(species, ignore_case = TRUE))) %>%
+  mutate(NCBI_strain_ID_clean = str_replace_all(NCBI_strain_ID, "[ -]+", "_")) %>%
+  mutate(has_strain_in_file_name =
+           str_detect(file_name, fixed(NCBI_strain_ID_clean, ignore_case = TRUE)))
+
+genomes_51 <- genomes_51 %>%
+  mutate(label = paste(genus, species, NCBI_strain_ID, sep = " ")) 
+```
+
