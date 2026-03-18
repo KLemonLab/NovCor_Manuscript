@@ -1,0 +1,31 @@
+---
+execute:
+  echo: true
+  eval: false
+format:
+  html:
+    suppress-bibliography: true
+---
+
+# R Session Info {.unnumbered}
+
+This document lists all R packages used across all analysis notebooks in this repository.
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+
+# Core data manipulation and visualization
+library(tidyverse)      # Data manipulation and ggplot2
+library(ggtext)         # Markdown text in ggplot2
+library(ggpubr)         # Publication-ready plots
+library(viridis)        # Color palettes
+```
+
+## Session Information
+
+This shows the exact versions of R and all packages used in the analysis.
+
+```{r}
+sessionInfo()
+```

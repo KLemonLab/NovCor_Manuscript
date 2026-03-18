@@ -1,0 +1,186 @@
+---
+execute:
+  eval: TRUE
+  message: FALSE
+  warning: FALSE
+---
+
+# Digital DNA:DNA hybridization (dDDH) {.unnumbered}
+
+```{r}
+library(tidyverse)
+library(ggtext)
+library(viridis)
+```
+
+## Set up paths
+
+```{r}
+#This will open the .Renviron file for the project. You need to add a DATA_PATH environment variable with the path to your data folder.
+#usethis::edit_r_environ(scope = "project") 
+
+FOLDER_PATH <- Sys.getenv("DATA_PATH") 
+genomes_list_folder <- file.path(FOLDER_PATH, "genome_lists")
+ggdc_folder <- file.path(FOLDER_PATH, "GGDC")
+```
+
+## Run dDDH
+
+Pairwise comparisons were performed using the online Genome-to-Genome Distance Calculator ([GGDC](https://ggdc.dsmz.de/ggdc.php))[@meier-kolthoff2021; @meier-kolthoff2013] with default parameters (BLAST+[@camacho2009]) for the 28 proposed *Corynebacterium nasorum* genomes and for the 30 genomes in the *Corynebacterium tuberculostearicum* complex.
+
+Each file in the `ggdc_folder` contains the results for one query genome against all reference genomes. We read and combined these files into a single data frame with formula 2 results. We then join this data frame with the `StrainOrder` data frame to add the styled genome names and specify the order of the levels for plotting.
+
+```{r}
+combine_ggdc <- function(data_path, StrainOrder_path) {
+  
+  # List all matching files
+  file_list <- list.files(path = data_path, pattern = "^ggdc_results_.*\\.csv$", full.names = TRUE)
+  
+  # Function to read each file
+  read_ggdc <- function(file) {
+    # Read the data skipping the second header row
+    df <- read_csv(file, skip = 1, show_col_types = FALSE)
+    
+    # Make column names unique
+    names(df) <- make.names(names(df), unique = TRUE)
+    
+    return(df)
+  }
+  
+  # Read and bind all files
+  all_ggdc_results <- map_dfr(file_list, read_ggdc)
+  
+  # Select desired columns for Formula 2
+  ggdc_formula2 <- all_ggdc_results %>%
+    select(
+      Query.genome,
+      Reference.genome,
+      `DDH...7`,
+      `Model.C.I....8`,
+      `Distance...9`,
+      `Prob..DDH....70....10`
+    )
+  
+  # Rename them to cleaner names
+  ggdc_formula2 <- ggdc_formula2 %>%
+    rename(
+      Genome1 = Query.genome,
+      Genome2 = Reference.genome,
+      DDH = `DDH...7`,
+      CI = `Model.C.I....8`,
+      Distance = `Distance...9`,
+      Prob_DDH_70 = `Prob..DDH....70....10`
+    )
+  
+  # Read the strain order from a CSV file and specify the order of the levels
+  StrainOrder <- read_csv(StrainOrder_path)
+
+  # Join the ggdc_formula2 and StrainOrder data frames based on Genome1
+  ggdc_formula2 <- left_join(ggdc_formula2, StrainOrder, by = c("Genome1" = "Genome")) %>% 
+    rename(styled_Genome1 = styled_Genome) 
+  
+  # Convert the 'styled_Genome1' and 'Genome1' columns to a factor and specify the order of the levels
+  ggdc_formula2$styled_Genome1 <- factor(ggdc_formula2$styled_Genome1, levels = StrainOrder$styled_Genome)
+  ggdc_formula2$Genome1 <- factor(ggdc_formula2$Genome1, levels = StrainOrder$Genome)
+  
+  # Join the ggdc_formula2 and StrainOrder data frames based on Genome2
+  ggdc_formula2 <- left_join(ggdc_formula2, StrainOrder, by = c("Genome2" = "Genome")) %>% 
+    rename(styled_Genome2 = styled_Genome) 
+  
+  # Convert the 'styled_Genome2' and 'Genome2' columns to a factor and specify the order of the levels
+  ggdc_formula2$styled_Genome2 <- factor(ggdc_formula2$styled_Genome2, levels = StrainOrder$styled_Genome)
+  ggdc_formula2$Genome2 <- factor(ggdc_formula2$Genome2, levels = StrainOrder$Genome)
+  
+  return(ggdc_formula2)
+}
+```
+
+Generate the data frames for the two datasets.
+
+```{r}
+dDDH_28 <- combine_ggdc(file.path(ggdc_folder, "NovCor_28_Cna"),
+  file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_28_Cna_styled.csv"))
+dDDH_30 <- combine_ggdc(file.path(ggdc_folder, "NovCor_30_CtuComplex"),
+  file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_30_CtuComplex_styled.csv"))
+```
+
+## Plots
+
+```{r}
+plot_DDH <- function(dDDH) {
+  pdDDH <- ggplot(dDDH, aes(x = styled_Genome1, y = styled_Genome2, fill = DDH)) + 
+    geom_tile(width = 1.0, height = 1.0) +
+    geom_text(aes(label = DDH), size = 3, colour = "black") +
+    scale_fill_viridis(option = "A", begin = 0.6) + 
+    scale_y_discrete(position = "right") +
+    labs(x = NULL, y = NULL, title = NULL) +
+    theme_bw() +
+    theme(axis.text.x = element_markdown(angle = 45, vjust = 1, hjust = 1, colour = "black", face = "bold"),
+          axis.text.y = element_markdown(colour = "black", face = "bold"),
+          panel.border = element_blank(),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(), 
+          axis.ticks = element_blank(),
+          plot.margin = margin(0, 0.25, 0.25, 1, "cm"),
+          legend.position = c(1.12, -0.12), 
+          legend.direction = "horizontal",
+          legend.justification = c(1, 0)) +
+    guides(fill = guide_colourbar(title = "dDDH", title.position = "top", title.hjust = 0.5, barwidth = 6))
+  return(pdDDH)
+}
+```
+
+Generate the plots for the two datasets.
+
+```{r}
+pdDDH_28 <- plot_DDH(dDDH_28)
+pdDDH_30 <- plot_DDH(dDDH_30)
+```
+
+Function to add colored rectangles to the plot, which we will use to highlight the different species groups in the *C. tuberculostearicum* complex.
+
+```{r}
+add_rectangles_to_heatmap <- function(plot, levels, top, bottom, color) {
+  top_pos <- which(levels == top)
+  bottom_pos <- which(levels == bottom)
+
+  p_with_rect <- plot +
+    geom_rect(
+      aes(xmin = top_pos + 0.5, 
+          xmax = bottom_pos - 0.5,
+          ymin = top_pos + 0.5, 
+          ymax = bottom_pos - 0.5),
+      fill = NA,
+      color = color,
+      size = 1
+    )
+  
+  return(p_with_rect)
+}
+```
+
+```{r}
+genome_levels <- levels(pdDDH_30$data$Genome1)
+pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Cna_KPL2825", "Cna_KPL3804", "#8200E7")  
+pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Cyo_c21Ua_68", "Cyo_KPL2619", "#0A6003")  
+pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Cmq_c19Ua_121", "Cmq_KPL4083", "#39D9E5")
+pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Ctu_MSK207", "Ctu_DSM_44922", "#002BFF") 
+pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Ccu_c8Ua_181", "Ccu_CTNIH19", "#FF00FF") 
+pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Cha_CTNIH23", "Cha_CTNIH22", "#0ABF00") 
+pdDDH_30
+```
+
+## Outputs
+
+```{r}
+write_csv(dDDH_28, file.path(ggdc_folder, "ggdc_formula2_NovCor_28_Cna.csv"))
+write_csv(dDDH_30, file.path(ggdc_folder, "ggdc_formula2_NovCor_30_CtuComplex.csv"))
+
+ggsave(file.path(ggdc_folder, "NovCor_dDDH_NovCor_28_Cna.png"), plot = pdDDH_28, width = 12, height = 9, dpi = 600)
+ggsave(file.path(ggdc_folder, "NovCor_dDDH_NovCor_30_CtuComplex.png"), plot = pdDDH_30, width = 12, height = 9, dpi = 600)
+```
+
+The results based on the recommended GGDC Formula 2 are reported in the manuscript in the following tables and figures:
+
+-   **dDDH_28:** Table S1, for each genome proposed to belong to *C. nasorum* against the type strain (KPL3804).
+-   **dDDH_30:** Table S2, full pairwise comparisons for all included genomes against each other; and Figure 2B, ordered to map the ANI results (Fig 2A)

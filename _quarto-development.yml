@@ -11,9 +11,7 @@ book:
     - index.qmd
     - part: "Methods"
       chapters:
-      - Methods_Prokka_Annotations.qmd
       - Methods_ANIs.qmd
       - Methods_dDDH.qmd
-      - Methods_Phylogenies.qmd
-      - Methods_Anvio.qmd
     - references.qmd
+    - Methods_RSession.qmd
