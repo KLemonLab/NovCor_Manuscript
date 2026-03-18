@@ -1,5 +1,5 @@
 project:
-  output-dir: _notebooks
+  output-dir: docs
 
 execute:
   echo: true
