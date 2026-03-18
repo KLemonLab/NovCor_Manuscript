@@ -1,6 +1,6 @@
 ---
 execute:
-  eval: TRUE
+  eval: FALSE
   message: FALSE
   warning: FALSE
 ---
@@ -16,15 +16,6 @@ execute:
 # This will create and open the .bash_env file for editing. You need to add a DATA_PATH environment variable with the path to your data folder.
 #file.create(".bash_env")
 #file.edit(".bash_env") 
-
-FOLDER_PATH <- Sys.getenv("DATA_PATH") 
-genomes_list_folder <- file.path(FOLDER_PATH, "genome_lists")
-
-# Create a folder for pyANI outputs if it doesn't exist
-anvio_folder <- file.path(FOLDER_PATH, "anvio-9")
-if (!dir.exists(ani_folder)) {
-  dir.create(ani_folder)
-}
 ```
 
 ## Custom Prokka Annotations
@@ -35,10 +26,9 @@ We annotated the genomes with [Prokka v1.14.6](https://github.com/tseemann/prokk
 
 This step annotates all the `.fasta` files in the selected input folder (`path_i`) and places all the output annotated files in the output folder (`path_o`). Output files headers get updated with --genus 'Corynebacterium' --species 'sp' and --strain based on the file name. We used default parameters, including gene recognition and translation initiation site identification with Prodigal [@Hyatt2010].
 
-```{bash}
-#| eval: FALSE
-
-#conda activate Prokka
+```{bash, eval=FALSE}
+conda deactivate
+conda activate Prokka
 
 path_i="data/genomes"
 path_o="data/GET_HOMOLOGUES/Prokka_out"
