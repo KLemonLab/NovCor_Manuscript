@@ -159,7 +159,7 @@ add_rectangles_to_heatmap <- function(plot, levels, top, bottom, color) {
 }
 ```
 
-```{r}
+```{r, fig.align="center",fig.width=12, fig.height=9}
 genome_levels <- levels(pdDDH_30$data$Genome1)
 pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Cna_KPL2825", "Cna_KPL3804", "#8200E7")  
 pdDDH_30 <- add_rectangles_to_heatmap(pdDDH_30, genome_levels, "Cyo_c21Ua_68", "Cyo_KPL2619", "#0A6003")  
