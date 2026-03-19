@@ -74,8 +74,8 @@ ANI_data_28 <- read.table(file.path(ani_folder, "NovCor_28_Cna/ANIb_identity_hea
 ANI_data_30 <- read.table(file.path(ani_folder, "NovCor_30_CtuComplex/ANIb_identity_heatmap.tsv"), header = TRUE, sep = "\t")
 
 # Extract the order of the genomes from the 'X' column of the data frame and save to file
-write_csv(data.frame(Genome = ANI_data_28$X ), file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_28_Cna.csv"))
-write_csv(data.frame(Genome = ANI_data_30$X ), file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_30_CtuComplex.csv"))
+write_csv(data.frame(Genome = ANI_data_28$X ), file.path(genomes_list_folder, "ANI_PlotOrder_28_Cna.csv"))
+write_csv(data.frame(Genome = ANI_data_30$X ), file.path(genomes_list_folder, "ANI_PlotOrder_30_CtuComplex.csv"))
 ```
 
 We manually edit the saved `PlotOrder` files to add a column with the styled genome names that we want to use in the plot. We then read the `_styled` version of those files back in and use them to set the order of the genomes in the plot and to add the styled genome names as labels in the plot.
@@ -134,8 +134,8 @@ plot_ani <- function(ANI_data, StrainOrder_path) {
 Generate the plots for the two datasets.
 
 ```{r}
-pANI_28 <- plot_ani(ANI_data_28, file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_28_Cna_styled.csv"))
-pANI_30 <- plot_ani(ANI_data_30, file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_30_CtuComplex_styled.csv"))
+pANI_28 <- plot_ani(ANI_data_28, file.path(genomes_list_folder, "ANI_PlotOrder_28_Cna_styled.csv"))
+pANI_30 <- plot_ani(ANI_data_30, file.path(genomes_list_folder, "ANI_PlotOrder_30_CtuComplex_styled.csv"))
 ```
 
 Function to add colored rectangles to the plot, which we will use to highlight the different species groups in the *C. tuberculostearicum* complex.

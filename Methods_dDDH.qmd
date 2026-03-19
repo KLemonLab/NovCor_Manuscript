@@ -99,9 +99,9 @@ Generate the data frames for the two datasets.
 
 ```{r}
 dDDH_28 <- combine_ggdc(file.path(ggdc_folder, "NovCor_28_Cna"),
-  file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_28_Cna_styled.csv"))
+  file.path(genomes_list_folder, "ANI_PlotOrder_28_Cna_styled.csv"))
 dDDH_30 <- combine_ggdc(file.path(ggdc_folder, "NovCor_30_CtuComplex"),
-  file.path(genomes_list_folder, "ANI_PlotOrder_NovCor_30_CtuComplex_styled.csv"))
+  file.path(genomes_list_folder, "ANI_PlotOrder_30_CtuComplex_styled.csv"))
 ```
 
 ## Plots

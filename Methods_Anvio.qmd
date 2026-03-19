@@ -1,6 +1,6 @@
 ---
 execute:
-  eval: FALSE
+  eval: TRUE
   message: FALSE
   warning: FALSE
 ---
@@ -12,6 +12,8 @@ library(tidyverse)
 library(ggtext)
 library(viridis)
 library(RColorBrewer)
+library(knitr)
+library(ggh4x)
 ```
 
 ## Set up paths
@@ -62,7 +64,7 @@ done
 
 First we downloaded and set up the KEGG KOfam[@Kanehisa2000; @Kanehisa2023] database using `anvi-setup-kegg-data`. We used the snapshot of the KEGG database dated 2025-11-07 (hash 68221bd12b3).
 
-The program `anvi-run-kegg-kofams` annotates genes in a given anvi'o contigs database with KEGG Orthology (KO) numbers via hits to the KEGG KOfam database [@aramaki2019]. We used `-E` lower than 1e-15. 
+The program `anvi-run-kegg-kofams` annotates genes in a given anvi'o contigs database with KEGG Orthology (KO) numbers via hits to the KEGG KOfam database [@aramaki2019]. We used `-E` lower than 1e-15.
 
 ```{bash, eval=FALSE}
 conda deactivate
@@ -190,27 +192,28 @@ done
 
 ### Estimation of KEGG module completeness
 
-Using `anvi-estimate-metabolism` we predicted KEGG module completeness as described in [@veseli2023] for the the organisms listed in `NovCor_MetabolicAnalysis_GenomeList_v01.txt`. This list includes the 30 *Corynebacterium* genomes selected for metabolic analysis.
+Using `anvi-estimate-metabolism` we predicted KEGG module completeness as described in [@veseli2023] for the the organisms listed in `anvio_KEGG_30_CtuComplex.txt`. This list includes the name of the 30 *Corynebacterium* genomes selected for metabolic analysis and the path to the corresponding anvi'o .db files.
 
 ```{bash, eval=FALSE}
-#conda activate anvio-dev
+conda deactivate
+conda activate anvio-9
 
-txt_file="data/genome_lists/NovCor_MetabolicAnalysis_GenomeList_v03.txt"
+txt_file="$DATA_PATH/genome_lists/anvio_KEGG_30_CtuComplex.txt"
 prefix=NovCor
-path_o="data/Anvio8/Metabolic_Analysis"
+path_o="$DATA_PATH/anvio-9/metabolic_analysis"
 mkdir -p "$path_o"
 
 anvi-estimate-metabolism -e $txt_file \
                          -O $path_o/$prefix --add-copy-number --output-modes hits,modules
 ```
 
-The generated `NovCor_modules.txt` and `NovCor_hits.txt` files are included as Supp Tables in this publication.
+The generated `NovCor_modules.txt` is included as **Table S4** in the manuscript. It contains the KEGG module completeness values for each genome, which are used to generate the KEGG module summary **Table S5**, and the heatmap in **Figure 4**.
 
-#### Code for KEGG Manuscript Table
+#### Code for KEGG Manuscript Table S5
 
 ```{r}
 # Read modules data and make appropriate labeling columns
-Modules <- read_delim("data/Anvio8/Metabolic_Analysis/NovCor_modules.txt", show_col_types = FALSE, col_types = cols(unique_enzymes_hit_counts = col_character(), gene_caller_ids_in_module = col_character())) %>% 
+Modules <- read_delim(file.path(anvio_folder, "metabolic_analysis/NovCor_modules.txt"), show_col_types = FALSE, col_types = cols(unique_enzymes_hit_counts = col_character(), gene_caller_ids_in_module = col_character())) %>% 
   mutate(module_class_short = paste0("(", substr(module_class, 1, 1), ")")) %>%
   unite(modules_label, c(module_class_short, module_category, module_subcategory), sep = "_", remove = FALSE) %>% 
   mutate_at(c("genome_name", "module", "module_name", "module_category", "module_subcategory", "modules_label"), factor)
@@ -225,14 +228,14 @@ ModulesTable <- Modules %>%
   arrange(desc(n)) %>%
   filter(n > 25)
 
-write_csv(ModulesTable, "data/Anvio8/Metabolic_Analysis/Fig_Tables/NovCor_KEEG_Table.csv")
+write_csv(ModulesTable, file.path(anvio_folder, "metabolic_analysis/NovCor_KEEG_Table.csv"))
 kable(ModulesTable)
 ```
 
-#### Code for KEGG Manuscript Figure
+#### Code for KEGG Manuscript Figure 4
 
 ```{r}
-StrainOrder <- read_csv("data/genome_lists/NovCor_MetabolicAnalysis_PlotOrder.txt")
+StrainOrder <- read_csv(file.path(genomes_list_folder, "ANI_PlotOrder_30_CtuComplex_styled.csv"))
 
 # When using stepwise_module_completeness some modules can be = 0 for all genomes but still have pathwise_module_completeness > 0. We are removing those modules.
 Modules_cleaned <- Modules %>%
@@ -255,25 +258,22 @@ Modules_Means = Modules_cleaned %>%
   mutate(modules_final_label = str_replace(modules_label, "^[^_]+_[^_]+_", "")) %>%
   mutate_at(c("module_category", "modules_final_label"), factor) 
 
-Modules_Means <- left_join(Modules_Means, StrainOrder, by = "genome_name")
+Modules_Means <- left_join(Modules_Means, StrainOrder, by = c("genome_name" = "Genome"))
 
 Modules_Means$species_name <- sub("Cke", "Cna", Modules_Means$species_name)
 Modules_Means$species_name <- sub("Cau", "Cmq", Modules_Means$species_name)
-Modules_Means$species_name <- factor(Modules_Means$species_name, levels = c("Cna","Ccu","Cha","Cyo","Cmq","Ctu"))
-Modules_Means$genome_name <- factor(Modules_Means$genome_name, levels = StrainOrder$genome_name)
-Modules_Means$styled_genome_name <- factor(Modules_Means$styled_genome_name, levels = rev(StrainOrder$styled_genome_name))
+Modules_Means$species_name <- factor(Modules_Means$species_name, levels = c("Cna","Cyo","Cmq","Ctu","Ccu","Cha"))
+Modules_Means$genome_name <- factor(Modules_Means$genome_name, levels = StrainOrder$Genome)
+Modules_Means$styled_Genome <- factor(Modules_Means$styled_Genome, levels = rev(StrainOrder$styled_Genome))
 Modules_Means$modules_final_label  <- factor(Modules_Means$modules_final_label, rev(levels(Modules_Means$modules_final_label)))
 ```
 
-```{r}
-#| fig-width: 12
-#| fig-height: 13
-
+```{r, fig.align="center",fig.width=12, fig.height=13}
 # Colors for plot
-colorsSpecies <- c("#8200E7", "#FF00FF", "#0ABF00", "#0A6003", "#39D9E5", "#002BFF")
+colorsSpecies <- c("#8200E7","#0A6003","#39D9E5","#002BFF","#FF00FF","#0ABF00")
 
 # Heatmap plot
-plot <- ggplot(Modules_Means, aes(x = styled_genome_name, y = modules_final_label, fill = mean_stepwise_module_completeness)) + 
+plot <- ggplot(Modules_Means, aes(x = styled_Genome, y = modules_final_label, fill = mean_stepwise_module_completeness)) + 
   geom_tile(color = "white") +
   facet_grid2(module_category ~ species_name, scales = "free", space = "free", switch = "y", labeller = label_wrap_gen(width = 31),
               #strip = strip_themed(background_x = elem_list_rect(fill = colorsSpecies))) +
@@ -297,31 +297,27 @@ plot <- ggplot(Modules_Means, aes(x = styled_genome_name, y = modules_final_labe
   guides(fill = guide_colourbar(title = "Average stepwise\nmodule completeness", title.position = "top", title.hjust = 0.5, barwidth = 8))
 
 
-ggsave(plot = plot, filename = "data/Anvio8/Metabolic_Analysis/Fig_Tables/NovCor_KEEG_Figure.png", height = 13, width = 12, device = 'png', dpi = 600)
+ggsave(plot = plot, filename = file.path(anvio_folder, "metabolic_analysis/NovCor_KEEG_Figure.png"), height = 13, width = 12, device = 'png', dpi = 600)
 
 plot
 ```
 
 ### Module Enrichment Analysis
 
-The `NovCor_modules.txt` file generated in the previous step is used by `anvi-compute-metabolic-enrichment` to calculate KEGG module enrichment[@shaiber2020] across different groups of genomes. We used the `-G` flag to indicate the grouping options defined in file `NovCor_MetabolicAnalysis_Groups_CtuComplex.txt`that includes the 30 *Corynebacterium* genomes grouped by their final species assignment.
+The `NovCor_modules.txt` file generated in the previous step is used by `anvi-compute-metabolic-enrichment` to calculate KEGG module enrichment[@shaiber2020] across different groups of genomes. We used the `-G` flag to indicate the following grouping options:
+
+-   Enriched KEGG modules in *Corynebacterium nasorum* versus other *Corynebacterium tuberculostearicum* complex genomes.
+-   Enriched KEGG modules in *Corynebacterium hallucis* versus other *Corynebacterium tuberculostearicum* complex genomes.
 
 ```{bash, eval=FALSE}
-#conda activate anvio-dev
+conda deactivate
+conda activate anvio-9
 
-csv_file_modules="data/Anvio8/Metabolic_Analysis/NovCor_modules.txt"
-path_o="data/Anvio8/Metabolic_Analysis/Enrichment_Modules"
+csv_file_modules="$DATA_PATH/anvio-9/metabolic_analysis/NovCor_modules.txt"
+path_o="$DATA_PATH/anvio-9/metabolic_analysis/enrichment_modules"
 mkdir -p "$path_o"
-
-txt_file_groups="data/genome_lists/NovCor_MetabolicAnalysis_Groups_CtuComplex_v03.txt"
-output_file="$path_o/NovCor_enriched_modules_stepwise_1_CtuComplex.txt"
-anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
-                                  -G "$txt_file_groups" \
-                                  -o "$output_file" \
-                                  --use-stepwise-completeness \
-                                  --module-completion-threshold 1.0
                                   
-txt_file_groups="data/genome_lists/NovCor_MetabolicAnalysis_Groups_Cna.txt"
+txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cna.txt"
 output_file="$path_o/NovCor_enriched_modules_stepwise_1_Cna.txt"
 anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
                                   -G "$txt_file_groups" \
@@ -329,7 +325,7 @@ anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
                                   --use-stepwise-completeness \
                                   --module-completion-threshold 1.0      
 
-txt_file_groups="data/genome_lists/NovCor_MetabolicAnalysis_Groups_Cha.txt"
+txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cha.txt"
 output_file="$path_o/NovCor_enriched_modules_stepwise_1_Cha.txt"
 anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
                                   -G "$txt_file_groups" \
@@ -343,26 +339,25 @@ anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
 
 We use `anvi-display-functions`[@shaiber2020]. It runs the enrichment for the desired annotations (in this case KOfam). It saves the output to a temp file that can be recovered, renamed and saved into the same `path_o` as the database file.
 
-```{bash, eval=FALSE}
-#conda activate anvio-dev
+-   **Table S6.** Enriched KOs in *Corynebacterium nasorum* versus other *Corynebacterium tuberculostearicum* complex genomes.
+-   **Table S7.** Enriched KOs in *Corynebacterium hallucis*  versus other *Corynebacterium tuberculostearicum* complex genomes.
 
-txt_file="data/genome_lists/NovCor_MetabolicAnalysis_GenomeList_v01.txt"
-path_o="data/Anvio8/Metabolic_Analysis/Enrichment_KOs"
+```{bash, eval=FALSE}
+conda deactivate
+conda activate anvio-9
+
+txt_file="$DATA_PATH/genome_lists/anvio_KEGG_30_CtuComplex.txt"
+path_o="$DATA_PATH/anvio-9/metabolic_analysis/enrichment_KOs"
 mkdir -p "$path_o"
 
-txt_file_groups="data/genome_lists/NovCor_MetabolicAnalysis_Groups_CtuComplex_v03.txt"
-anvi-display-functions -e $txt_file \
-                       --groups-txt $txt_file_groups \
-                       --annotation-source KOfam \
-                       --profile-db $path_o/KOfam_CtuComplex.db
 
-txt_file_groups="data/genome_lists/NovCor_MetabolicAnalysis_Groups_Cna.txt"
+txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cna.txt"
 anvi-display-functions -e $txt_file \
                        --groups-txt $txt_file_groups \
                        --annotation-source KOfam \
                        --profile-db $path_o/KOfam_Cna.db
                        
-txt_file_groups="data/genome_lists/NovCor_MetabolicAnalysis_Groups_Cha.txt"
+txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cha.txt"
 anvi-display-functions -e $txt_file \
                        --groups-txt $txt_file_groups \
                        --annotation-source KOfam \
@@ -413,28 +408,30 @@ Enrich_KO_Cha <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_KOs/NovCo
 
 ### Pangenomic level analysis
 
-This analysis using `NovCor_MetabolicAnalysis_GenomeList_v02.txt` includes the 30 *Corynebacterium* genomes selected for metabolic analysis.
+This analysis using `anvio_KEGG_30_CtuComplex.txt` includes the same 30 *Corynebacterium* genomes selected for metabolic analysis.
 
 ```{bash, eval=FALSE}
-#conda activate anvio-dev
+conda deactivate
+conda activate anvio-9
 
-path_i="data/Anvio8/Pangenomic_Analysis"
+txt_file="$DATA_PATH/genome_lists/anvio_KEGG_30_CtuComplex.txt"
+path_i="$DATA_PATH/anvio-9/pangenomic_analysis"
 mkdir -p "$path_i"
 
-anvi-gen-genomes-storage -e "data/genome_lists/NovCor_MetabolicAnalysis_GenomeList_v02.txt" -o $path_i/NovCor-ANI-GENOMES.db --gene-caller Prodigal
+anvi-gen-genomes-storage -e $txt_file -o $path_i/NovCor-GENOMES.db --gene-caller Prodigal
 
-anvi-db-info $path_i/NovCor-ANI-GENOMES.db
+anvi-db-info $path_i/NovCor-GENOMES.db
 
-anvi-pan-genome -g $path_i/NovCor-ANI-GENOMES.db \
-                -o $path_i/ANI -n PAN_ANI \
+anvi-pan-genome -g $path_i/NovCor-GENOMES.db \
+                -o $path_i/pangenome -n NovCor \
                 --use-ncbi-blast --mcl-inflation 10  --num-threads 8
 
-#Create a bin collection named ANI with all Core GCs for the species using the visual interface:       
+#Create a bin collection named CORE with all Core GCs for all the included genomes using the visual interface:       
 
-anvi-display-pan -p $path_i/ANI/PAN_ANI-PAN.db -g $path_i/NovCor-ANI-GENOMES.db         
+anvi-display-pan -p $path_i/pangenome/NovCor-PAN.db -g $path_i/NovCor-GENOMES.db         
 
-anvi-summarize -p $path_i/ANI/PAN_ANI-PAN.db \
-               -g $path_i/NovCor-ANI-GENOMES.db \
-               -o $path_i/ANI/Summaries \
-               -C ANI
+anvi-summarize -p $path_i/pangenome/NovCor-PAN.db \
+               -g $path_i/NovCor-GENOMES.db \
+               -o $path_i/summaries \
+               -C CORE
 ```

@@ -19,6 +19,8 @@ This document lists all R packages used across all analysis notebooks in this re
 library(tidyverse)      # Data manipulation and ggplot2
 library(ggtext)         # Markdown text in ggplot2
 library(viridis)        # Color palettes
+library(RColorBrewer)   # Color palettes
+library(knitr)          # Dynamic report generation
 ```
 
 ## Session Information
