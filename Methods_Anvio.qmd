@@ -235,8 +235,6 @@ kable(ModulesTable)
 #### Code for KEGG Manuscript Figure 4
 
 ```{r}
-StrainOrder <- read_csv(file.path(genomes_list_folder, "ANI_PlotOrder_30_CtuComplex_styled.csv"))
-
 # When using stepwise_module_completeness some modules can be = 0 for all genomes but still have pathwise_module_completeness > 0. We are removing those modules.
 Modules_cleaned <- Modules %>%
   group_by(module) %>%
@@ -258,6 +256,8 @@ Modules_Means = Modules_cleaned %>%
   mutate(modules_final_label = str_replace(modules_label, "^[^_]+_[^_]+_", "")) %>%
   mutate_at(c("module_category", "modules_final_label"), factor) 
 
+# Reorder based on ANI results and add styled genome names for plotting
+StrainOrder <- read_csv(file.path(genomes_list_folder, "ANI_PlotOrder_30_CtuComplex_styled.csv"))
 Modules_Means <- left_join(Modules_Means, StrainOrder, by = c("genome_name" = "Genome"))
 
 Modules_Means$species_name <- sub("Cke", "Cna", Modules_Means$species_name)
@@ -317,7 +317,7 @@ csv_file_modules="$DATA_PATH/anvio-9/metabolic_analysis/NovCor_modules.txt"
 path_o="$DATA_PATH/anvio-9/metabolic_analysis/enrichment_modules"
 mkdir -p "$path_o"
                                   
-txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cna.txt"
+txt_file_groups="$DATA_PATH/genome_lists/anvio_MetabolicEnrichment_Groups_Cna.txt"
 output_file="$path_o/NovCor_enriched_modules_stepwise_1_Cna.txt"
 anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
                                   -G "$txt_file_groups" \
@@ -325,14 +325,13 @@ anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
                                   --use-stepwise-completeness \
                                   --module-completion-threshold 1.0      
 
-txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cha.txt"
+txt_file_groups="$DATA_PATH/genome_lists/anvio_MetabolicEnrichment_Groups_Cha.txt"
 output_file="$path_o/NovCor_enriched_modules_stepwise_1_Cha.txt"
 anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
                                   -G "$txt_file_groups" \
                                   -o "$output_file" \
                                   --use-stepwise-completeness \
                                   --module-completion-threshold 1.0 
-
 ```
 
 ### KO Enrichment Analysis
@@ -350,63 +349,20 @@ txt_file="$DATA_PATH/genome_lists/anvio_KEGG_30_CtuComplex.txt"
 path_o="$DATA_PATH/anvio-9/metabolic_analysis/enrichment_KOs"
 mkdir -p "$path_o"
 
-
-txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cna.txt"
+txt_file_groups="$DATA_PATH/genome_lists/anvio_MetabolicEnrichment_Groups_Cna.txt"
 anvi-display-functions -e $txt_file \
                        --groups-txt $txt_file_groups \
                        --annotation-source KOfam \
                        --profile-db $path_o/KOfam_Cna.db
                        
-txt_file_groups="$DATA_PATH/genome_lists/NovCor_MetabolicAnalysis_Groups_Cha.txt"
+txt_file_groups="$DATA_PATH/genome_lists/anvio_MetabolicEnrichment_Groups_Cha.txt"
 anvi-display-functions -e $txt_file \
                        --groups-txt $txt_file_groups \
                        --annotation-source KOfam \
                        --profile-db $path_o/KOfam_Cha.db
 ```
 
-Many of the enriched KOs belong to the already identified enriched modules. This function filters out those KOs that are part of the definition of modules listed in the enriched modules identified with `anvi-compute-metabolic-enrichment`:
-
-```{r, eval=FALSE}
-get_KOs_not_in_enrich_modules <- function(modules, hits, enrich_modules, enrich_KOs, q_value_threshold) {
-
-  # Get list of KOs that correspond with the modules on the enrichment file
-  modules_subset <- modules %>% filter(module %in% enrich_modules$accession)
-  module_definition_subset <- paste(modules_subset$module_definition, collapse = " ")
-  module_definition_subset <- str_extract_all(module_definition_subset, "\\bK\\d+\\b")
-  module_definition_subset <- unique(unlist(module_definition_subset))
-
-  # Add a column to enrich_KOs indicating if the KO is the previous list
-  enrich_KOs$inModule <- sapply(strsplit(as.character(enrich_KOs$accession), ","), function(x) all((x %in% module_definition_subset)))
-
-  # Filter Enrich_KO based on inModule and q_value_threshold
-  enrich_KOs_filtered <- enrich_KOs %>% 
-    filter(inModule == FALSE) %>% 
-    filter(adjusted_q_value < q_value_threshold)
-
-  return(enrich_KOs_filtered)
-}
-
-Modules <- read_delim("data/Anvio8/Metabolic_Analysis/NovCor_modules.txt", show_col_types = FALSE, col_types = cols(unique_enzymes_hit_counts = col_character(), gene_caller_ids_in_module = col_character()))
-KOHits <- read_delim("data/Anvio8/Metabolic_Analysis/NovCor_hits.txt", show_col_types = FALSE)
-
-Enrich_Mod_CtuComplex <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_Modules/NovCor_enriched_modules_stepwise_1_CtuComplex.txt", show_col_types = FALSE)
-Enrich_KO_CtuComplex <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_KOs/NovCor_enriched_KOs_CtuComplex.txt", show_col_types = FALSE)
-Enrich_KO_CtuComplex_Filtered <- get_KOs_not_in_enrich_modules(Modules, KOHits, Enrich_Mod_CtuComplex, Enrich_KO_CtuComplex, 0.1)
-write_csv(Enrich_KO_CtuComplex_Filtered, "data/Anvio8/Metabolic_Analysis/Enrichment_KOs/NovCor_enriched_KOs_CtuComplex_Filtered.csv")
-```
-
-```{r, eval=FALSE}
-Enrich_Mod_CtuComplex <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_Modules/NovCor_enriched_modules_stepwise_1_CtuComplex.txt", show_col_types = FALSE)
-Enrich_KO_CtuComplex <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_KOs/NovCor_enriched_KOs_CtuComplex.txt", show_col_types = FALSE)
-
-Enrich_Mod_Cna <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_Modules/NovCor_enriched_modules_stepwise_1_Cna.txt", show_col_types = FALSE)
-Enrich_KO_Cna <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_KOs/NovCor_enriched_KOs_Cna.txt", show_col_types = FALSE)
-
-Enrich_Mod_Cha <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_Modules/NovCor_enriched_modules_stepwise_1_Cna.txt", show_col_types = FALSE)
-Enrich_KO_Cha <- read_delim("data/Anvio8/Metabolic_Analysis/Enrichment_KOs/NovCor_enriched_KOs_Cna.txt", show_col_types = FALSE)
-```
-
-### Pangenomic level analysis
+## Pangenomic level analysis
 
 This analysis using `anvio_KEGG_30_CtuComplex.txt` includes the same 30 *Corynebacterium* genomes selected for metabolic analysis.
 
@@ -434,4 +390,16 @@ anvi-summarize -p $path_i/pangenome/NovCor-PAN.db \
                -g $path_i/NovCor-GENOMES.db \
                -o $path_i/summaries \
                -C CORE
+```
+
+## Reading results into R
+
+```{r}
+Enrich_Mod_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_modules/NovCor_enriched_modules_stepwise_1_Cna.txt"), show_col_types = FALSE)
+Enrich_Mod_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_modules/NovCor_enriched_modules_stepwise_1_Cna.txt"), show_col_types = FALSE)
+
+Enrich_KO_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cna.txt"), show_col_types = FALSE)
+Enrich_KO_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cna.txt"), show_col_types = FALSE)
+
+NovCor_PAN <- read_delim(file.path(anvio_folder, "pangenomic_analysis/summaries/NovCor_gene_clusters_summary.txt.gz"), show_col_types = FALSE)
 ```
