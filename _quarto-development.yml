@@ -13,5 +13,6 @@ book:
       chapters:
       - Methods_ANIs.qmd
       - Methods_dDDH.qmd
+      - Methods_Prokka_Annotations.qmd
     - references.qmd
     - Methods_RSession.qmd
