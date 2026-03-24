@@ -30,13 +30,17 @@ This step annotates all the `.fasta` files in the selected input folder (`path_i
 conda deactivate
 conda activate Prokka
 
-path_i="data/genomes"
-path_o="data/GET_HOMOLOGUES/Prokka_out"
+path_i="data/genomes/fasta_51_MainFigs"
+path_o="data/phylogenies/51_MainFigs/annot_prokka_51"
+
+#path_i="data/genomes/fasta_72_SuppFigure" #Run for both folders
+#path_o="data/phylogenies/72_SuppFigure/annot_prokka_72"
+
 mkdir -p "$path_o"
 
 for file in $path_i/*.f*; do
     FILENAME=`basename ${file%.*}`
-    prokka --prefix $FILENAME --outdir $path_o --genus 'Corynebacterium' --species 'sp' --strain $FILENAME --centre X --compliant --cpus 0 --force $file; 
+    prokka --prefix $FILENAME --outdir $path_o --strain $FILENAME --centre X --compliant --cpus 0 --force $file; 
 done
 ```
 
