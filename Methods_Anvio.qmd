@@ -218,15 +218,15 @@ Modules <- read_delim(file.path(anvio_folder, "metabolic_analysis/NovCor_modules
   unite(modules_label, c(module_class_short, module_category, module_subcategory), sep = "_", remove = FALSE) %>% 
   mutate_at(c("genome_name", "module", "module_name", "module_category", "module_subcategory", "modules_label"), factor)
 
-# Summary tally table of fully stepwise complete modules by species. Filter to modules present in at least 25 genomes
+# Summary tally table of fully stepwise complete modules by species. Filter to modules present in at least 20 genomes
 ModulesTable <- Modules %>%
   filter(stepwise_module_completeness == 1) %>%
   group_by(module_class, module_category, module_subcategory, module, module_name) %>%
   tally() %>%
   ungroup() %>%
-  select(module, module_name, n, -module_class) %>%  
+  select(module, module_name, module_subcategory, n, -module_class) %>%  
   arrange(desc(n)) %>%
-  filter(n > 25)
+  filter(n > 20)
 
 write_csv(ModulesTable, file.path(anvio_folder, "metabolic_analysis/NovCor_KEEG_Table.csv"))
 kable(ModulesTable)
@@ -399,7 +399,7 @@ Enrich_Mod_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichm
 Enrich_Mod_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_modules/NovCor_enriched_modules_stepwise_1_Cna.txt"), show_col_types = FALSE)
 
 Enrich_KO_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cna.txt"), show_col_types = FALSE)
-Enrich_KO_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cna.txt"), show_col_types = FALSE)
+Enrich_KO_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cha.txt"), show_col_types = FALSE)
 
 NovCor_PAN <- read_delim(file.path(anvio_folder, "pangenomic_analysis/summaries/NovCor_gene_clusters_summary.txt.gz"), show_col_types = FALSE)
 ```
