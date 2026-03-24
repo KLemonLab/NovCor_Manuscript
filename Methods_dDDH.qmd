@@ -125,7 +125,7 @@ plot_DDH <- function(dDDH) {
           legend.position = c(1.12, -0.12), 
           legend.direction = "horizontal",
           legend.justification = c(1, 0)) +
-    guides(fill = guide_colourbar(title = "dDDH", title.position = "top", title.hjust = 0.5, barwidth = 6))
+    guides(fill = guide_colourbar(title = "dDDH Formula 2", title.position = "top", title.hjust = 0.5, barwidth = 6))
   return(pdDDH)
 }
 ```
@@ -178,6 +178,9 @@ write_csv(dDDH_30, file.path(ggdc_folder, "ggdc_formula2_NovCor_30_CtuComplex.cs
 
 ggsave(file.path(ggdc_folder, "NovCor_dDDH_NovCor_28_Cna.png"), plot = pdDDH_28, width = 12, height = 9, dpi = 600)
 ggsave(file.path(ggdc_folder, "NovCor_dDDH_NovCor_30_CtuComplex.png"), plot = pdDDH_30, width = 12, height = 9, dpi = 600)
+
+saveRDS(pdDDH_28, file = file.path(ggdc_folder, "NovCor_dDDH_NovCor_28_Cna.rds"))
+saveRDS(pdDDH_30, file = file.path(ggdc_folder, "NovCor_dDDH_NovCor_30_CtuComplex.rds"))
 ```
 
 The results based on the recommended GGDC Formula 2 are reported in the manuscript in the following tables and figures:

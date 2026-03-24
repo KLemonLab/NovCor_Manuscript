@@ -21,6 +21,10 @@ library(ggtext)         # Markdown text in ggplot2
 library(viridis)        # Color palettes
 library(RColorBrewer)   # Color palettes
 library(knitr)          # Dynamic report generation
+library(ggh4x)          # Extensions for ggplot2
+library(cowplot)        # Plot arrangement
+library(png)            # Reading PNG images
+library(grid)           # Grid graphics
 ```
 
 ## Session Information

@@ -1,0 +1,70 @@
+---
+execute:
+  eval: TRUE
+  message: FALSE
+  warning: FALSE
+---
+
+# Figures {.unnumbered}
+
+```{r}
+library(tidyverse)
+library(ggtext)
+library(cowplot)
+library(png)
+library(grid)
+```
+
+## Set up paths
+
+```{r}
+FOLDER_PATH <- Sys.getenv("DATA_PATH") 
+
+ani_folder <- file.path(FOLDER_PATH, "pyani-plus")
+ggdc_folder <- file.path(FOLDER_PATH, "GGDC")
+anvio_folder <- file.path(FOLDER_PATH, "anvio-9")
+figures_folder <- file.path(FOLDER_PATH, "FIGURES")
+if (!dir.exists(figures_folder)) {
+  dir.create(figures_folder)
+}
+```
+
+## Figure 2
+
+```{r}
+pANI_30 <- readRDS(file.path(ani_folder, "NovCor_ANI_NovCor_30_CtuComplex.rds")) 
+dDDH_30 <- readRDS(file.path(ggdc_folder, "NovCor_dDDH_NovCor_30_CtuComplex.rds"))
+
+key <- readPNG(file.path(figures_folder, "ColorKey.png")) 
+key <- rasterGrob(key, interpolate = TRUE)
+```
+
+```{r, fig.align="center",fig.width=12, fig.height=18}
+fig2 <- plot_grid(
+  pANI_30, dDDH_30, key, 
+  labels = c("A", "B", ""), rel_heights = c(1, 1, 0.05), ncol = 1
+)
+fig2
+ggsave(plot = fig2, file.path(figures_folder, "Figure_2.png"), width = 12, height = 18)
+ggsave(plot = fig2, file.path(figures_folder, "Figure_2.svg"), width = 12, height = 18)
+ggsave(plot = fig2, file.path(figures_folder, "Figure_2.jpeg"), width = 12, height = 18)
+```
+
+## Figure 4
+
+```{r}
+KEGG_30 <- readRDS(file.path(anvio_folder, "metabolic_analysis/NovCor_KEEG_Figure.rds")) 
+```
+
+```{r, fig.align="center",fig.width=12, fig.height=13}
+fig4 <- plot_grid(
+  key, KEGG_30,
+  rel_heights = c(0.05, 1), ncol = 1
+)
+fig4
+
+ggsave(plot = fig4, file.path(figures_folder, "Figure_4.png"), width = 12, height = 13)
+ggsave(plot = fig4, file.path(figures_folder, "Figure_4.svg"), width = 12, height = 13)
+ggsave(plot = fig4, file.path(figures_folder, "Figure_4.jpeg"), width = 12, height = 13)
+```
+

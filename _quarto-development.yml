@@ -15,5 +15,6 @@ book:
       - Methods_dDDH.qmd
       - Methods_Prokka_Annotations.qmd
       - Methods_Anvio.qmd
+      - Methods_Figures.qmd
     - references.qmd
     - Methods_RSession.qmd

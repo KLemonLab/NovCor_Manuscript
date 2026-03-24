@@ -298,7 +298,7 @@ plot <- ggplot(Modules_Means, aes(x = styled_Genome, y = modules_final_label, fi
 
 
 ggsave(plot = plot, filename = file.path(anvio_folder, "metabolic_analysis/NovCor_KEEG_Figure.png"), height = 13, width = 12, device = 'png', dpi = 600)
-
+saveRDS(plot, file = file.path(anvio_folder, "metabolic_analysis/NovCor_KEEG_Figure.rds"))
 plot
 ```
 

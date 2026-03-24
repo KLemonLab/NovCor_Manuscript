@@ -125,7 +125,7 @@ plot_ani <- function(ANI_data, StrainOrder_path) {
           legend.position = c(1.12, -0.12), 
           legend.direction = "horizontal",
           legend.justification = c(1, 0)) +
-    guides(fill = guide_colourbar(title="% identity", title.position="top", title.hjust = 0.5, barwidth = 6))
+    guides(fill = guide_colourbar(title="ANIb % identity", title.position="top", title.hjust = 0.5, barwidth = 6))
   
   return(pANI)
 }
@@ -176,6 +176,9 @@ pANI_30
 ```{r}
 ggsave(file.path(ani_folder, "NovCor_ANI_NovCor_28_Cna.png"), plot = pANI_28, width = 12, height = 9, dpi = 600)
 ggsave(file.path(ani_folder, "NovCor_ANI_NovCor_30_CtuComplex.png"), plot = pANI_30, width = 12, height = 9, dpi = 600)
+
+saveRDS(pANI_28, file = file.path(ani_folder, "NovCor_ANI_NovCor_28_Cna.rds"))
+saveRDS(pANI_30, file = file.path(ani_folder, "NovCor_ANI_NovCor_30_CtuComplex.rds"))
 ```
 
 The results based on the identity_heatmap ANI files are reported in the manuscript in the following tables and figures:
