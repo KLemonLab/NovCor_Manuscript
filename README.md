@@ -1,5 +1,4 @@
 # NovCor Manuscript
 
-This repository contains the code for the rendered html files that allow for the public links included in the NovCor manuscript.
-
-For the original code see [https://github.com/KLemonLab/NovCor_Pangenomics](https://github.com/KLemonLab/NovCor_Pangenomics)
+This repository contains the code and main analysis files for the manuscript:
+"Description of *Corynebacterium nasorum* sp. nov. and *Corynebacterium hallucis* sp. nov. isolated from human nasal passages and skin"
