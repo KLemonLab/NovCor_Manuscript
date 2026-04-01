@@ -1,0 +1,64 @@
+module,module_name,module_subcategory,n
+M00015,"Proline biosynthesis, glutamate => proline",Arginine and proline metabolism,30
+M00844,"Arginine biosynthesis, ornithine => arginine",Arginine and proline metabolism,30
+M00970,"Proline degradation, proline => glutamate",Arginine and proline metabolism,30
+M00022,"Shikimate pathway, phosphoenolpyruvate + erythrose-4P => chorismate",Aromatic amino acid metabolism,30
+M00019,"Valine/isoleucine biosynthesis, pyruvate => valine / 2-oxobutanoate => isoleucine",Branched-chain amino acid metabolism,30
+M00432,"Leucine biosynthesis, 2-oxoisovalerate => 2-oxoisocaproate",Branched-chain amino acid metabolism,30
+M00570,"Isoleucine biosynthesis, threonine => 2-oxobutanoate => isoleucine",Branched-chain amino acid metabolism,30
+M00021,"Cysteine biosynthesis, serine => cysteine",Cysteine and methionine metabolism,30
+M00045,"Histidine degradation, histidine => N-formiminoglutamate => glutamate",Histidine metabolism,30
+M00018,"Threonine biosynthesis, aspartate => homoserine => threonine",Serine and threonine metabolism,30
+M00020,"Serine biosynthesis, glycerate-3P => serine",Serine and threonine metabolism,30
+M00621,Glycine cleavage system,Serine and threonine metabolism,30
+M00096,"C5 isoprenoid biosynthesis, non-mevalonate pathway",Terpenoid backbone biosynthesis,30
+M00364,"C10-C20 isoprenoid biosynthesis, bacteria",Terpenoid backbone biosynthesis,30
+M00365,"C10-C20 isoprenoid biosynthesis, archaea",Terpenoid backbone biosynthesis,30
+M00097,"Lycopene biosynthesis, geranylgeranyl-PP => lycopene",Terpenoid biosynthesis,30
+M00001,"Glycolysis (Embden-Meyerhof pathway), glucose => pyruvate",Central carbohydrate metabolism,30
+M00002,"Glycolysis, core module involving three-carbon compounds",Central carbohydrate metabolism,30
+M00003,"Gluconeogenesis, oxaloacetate => fructose-6P",Central carbohydrate metabolism,30
+M00004,Pentose phosphate pathway (Pentose phosphate cycle),Central carbohydrate metabolism,30
+M00005,"PRPP biosynthesis, ribose 5P => PRPP",Central carbohydrate metabolism,30
+M00006,"Pentose phosphate pathway, oxidative phase, glucose 6P => ribulose 5P",Central carbohydrate metabolism,30
+M00007,"Pentose phosphate pathway, non-oxidative phase, fructose 6P => ribose 5P",Central carbohydrate metabolism,30
+M00009,"Citrate cycle (TCA cycle, Krebs cycle)",Central carbohydrate metabolism,30
+M00010,"Citrate cycle, first carbon oxidation, oxaloacetate => 2-oxoglutarate",Central carbohydrate metabolism,30
+M00011,"Citrate cycle, second carbon oxidation, 2-oxoglutarate => oxaloacetate",Central carbohydrate metabolism,30
+M00632,"Galactose degradation, Leloir pathway, galactose => alpha-D-glucose-1P",Other carbohydrate metabolism,30
+M00855,"Glycogen degradation, glycogen => glucose-6P",Other carbohydrate metabolism,30
+M00151,Cytochrome bc1 complex respiratory unit,ATP synthesis,30
+M00155,"Cytochrome c oxidase, prokaryotes",ATP synthesis,30
+M00157,"F-type ATPase, prokaryotes and chloroplasts",ATP synthesis,30
+M00579,"Phosphate acetyltransferase-acetate kinase pathway, acetyl-CoA => acetate",Carbon fixation,30
+M00549,"UDP-Glc biosynthesis, Glc => UDP-Glc",Nucleotide sugar biosynthesis,30
+M00554,"UDP-Gal biosynthesis, Gal => UDP-Gal",Nucleotide sugar biosynthesis,30
+M00793,"dTDP-L-Rha biosynthesis, Glc-1P => dTDP-L-Rha",Nucleotide sugar biosynthesis,30
+M00909,"UDP-GlcNAc biosynthesis, prokaryotes, Fru-6P => UDP-GlcNAc",Nucleotide sugar biosynthesis,30
+M00995,"UDP-MurNAc biosynthesis, Fru-6P => UDP-MurNAc",Nucleotide sugar biosynthesis,30
+M01004,"UDP-Galf biosynthesis, UDP-Glc => UDP-Galf",Nucleotide sugar biosynthesis,30
+M00888,"Galactofuranan biosynthesis, decaprenyl phosphate + UDP-GlcNAc (+ dTDP-Rha/UDP-Galf) => GL-5",Other polysaccharide metabolism,30
+M00086,"beta-Oxidation, acyl-CoA synthesis",Fatty acid metabolism,30
+M00887,"Mycolic acid biosynthesis, meromycolic acid + alpha-carboxyacyl-CoA + trehalose => TMM => TDM/mAGP/GMM",Fatty acid metabolism,30
+M00120,"Coenzyme A biosynthesis, pantothenate => CoA",Cofactor and vitamin metabolism,30
+M00121,"Heme biosynthesis, plants and bacteria, glutamate => heme",Cofactor and vitamin metabolism,30
+M00125,"Riboflavin biosynthesis, plants and bacteria, GTP => riboflavin/FMN/FAD",Cofactor and vitamin metabolism,30
+M00126,"Tetrahydrofolate biosynthesis, GTP => THF",Cofactor and vitamin metabolism,30
+M00881,"Lipoic acid biosynthesis, plants and bacteria, octanoyl-ACP => dihydrolipoyl-E2/H",Cofactor and vitamin metabolism,30
+M00899,"Thiamine salvage pathway, HMP/HET => TMP",Cofactor and vitamin metabolism,30
+M00916,"Pyridoxal-P biosynthesis, R5P + glyceraldehyde-3P + glutamine => pyridoxal-P",Cofactor and vitamin metabolism,30
+M00926,"Heme biosynthesis, bacteria, glutamyl-tRNA => coproporphyrin III => heme",Cofactor and vitamin metabolism,30
+M00048,"De novo purine biosynthesis, PRPP + glutamine => IMP",Purine metabolism,30
+M00049,"Adenine ribonucleotide biosynthesis, IMP => ADP,ATP",Purine metabolism,30
+M00050,"Guanine ribonucleotide biosynthesis, IMP => GDP,GTP",Purine metabolism,30
+M00053,"Deoxyribonucleotide biosynthesis, ADP/GDP/CDP/UDP => dATP/dGTP/dCTP/dUTP",Purine metabolism,30
+M00938,"Pyrimidine deoxyribonucleotide biosynthesis, UDP => dTTP",Pyrimidine metabolism,30
+M00023,"Tryptophan biosynthesis, chorismate => tryptophan",Aromatic amino acid metabolism,29
+M00555,"Betaine biosynthesis, choline => betaine",Serine and threonine metabolism,29
+M00140,"C1-unit interconversion, prokaryotes",Cofactor and vitamin metabolism,29
+M00028,"Ornithine biosynthesis, glutamate => ornithine",Arginine and proline metabolism,26
+M00016,"Lysine biosynthesis, succinyl-DAP pathway, aspartate => lysine",Lysine metabolism,26
+M00017,"Methionine biosynthesis, aspartate => homoserine => methionine",Cysteine and methionine metabolism,25
+M00307,"Pyruvate oxidation, pyruvate => acetyl-CoA",Central carbohydrate metabolism,25
+M01014,"UDP-ManNAcA biosynthesis, UDP-GlcNAc => UDP-ManNAcA",Nucleotide sugar biosynthesis,25
+M00982,Methylcitrate cycle,Other carbohydrate metabolism,24
