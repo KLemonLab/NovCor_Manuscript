@@ -40,5 +40,4 @@ rsconnect/
 _notebooks
 /.quarto/
 /screen_logs/
-data/
 _Data*
