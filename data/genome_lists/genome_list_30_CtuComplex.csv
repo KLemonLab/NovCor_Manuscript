@@ -1,0 +1,31 @@
+﻿name,genus,species,GCF,file_name,strain,species_full
+Ccu_c8Ua_181,Corynebacterium,curieae,GCF_027570035.1,Ccu_c8Ua_181,c8Ua_181,C. curieae
+Ccu_CTNIH19,Corynebacterium,curieae,GCF_032821675.1,Ccu_CTNIH19,CTNIH19,C. curieae
+Cha_CTNIH20,Corynebacterium,hallucis,GCF_030503735.1,Cha_CTNIH20,CTNIH20,"C. hallucis (previously ""C. tuberculostearicum"")"
+Cha_CTNIH21,Corynebacterium,hallucis,GCF_032821695.1,Cha_CTNIH21,CTNIH21,"C. hallucis (previously ""C. tuberculostearicum"")"
+Cha_CTNIH22,Corynebacterium,hallucis,GCF_032821755.1,Cha_CTNIH22,CTNIH22,"C. hallucis (previously ""C. tuberculostearicum"")"
+Cha_CTNIH23,Corynebacterium,hallucis,GCF_030450155.1,Cha_CTNIH23,CTNIH23,"C. hallucis (previously ""C. tuberculostearicum"")"
+Cmq_c19Ua_121,Corynebacterium,marquesiae,GCF_027570155.1,Cmq_c19Ua_121,c19Ua_121,C. marquesiae
+Cmq_KPL4083,Corynebacterium,marquesiae,GCF_037908305.1,Cmq_KPL4083,KPL4083,C. marquesiae
+Cmq_MSK144,Corynebacterium,marquesiae,GCF_030228985.1,Cmq_MSK144,MSK144,C. marquesiae
+Cke_CTNIH24,Corynebacterium,nasorum,GCF_022347295.1,Cke_CTNIH24,CTNIH24,C. nasorum (previously Corynebacterium sp.)
+Cke_CTNIH27,Corynebacterium,nasorum,GCF_022345795.1,Cke_CTNIH27,CTNIH27,C. nasorum (previously Corynebacterium sp.)
+Cke_EYE_437,Corynebacterium,nasorum,GCF_023147335.1,Cke_EYE_437,EYE_437,"C. nasorum (previously ""C. kefirresidentii"")"
+Cke_FDAARGOS_1055,Corynebacterium,nasorum,GCF_016599755.1,Cke_FDAARGOS_1055,FDAARGOS_1055,"C. nasorum (previously ""C. kefirresidentii"")"
+Cke_LK1134,Corynebacterium,nasorum,GCF_025151445.1,Cke_LK1134,LK1134,"C. nasorum (previously ""C. kefirresidentii"")"
+Cke_YSMAA5_1_D11,Corynebacterium,nasorum,GCF_046097515.1,Cke_YSMAA5_1_D11,YSMAA5_1_D11,"C. nasorum (previously ""C. kefirresidentii"")"
+Cna_KPL2825,Corynebacterium,nasorum,GCF_037908445.1,Cna_KPL2825,KPL2825,C. nasorum (previously Corynebacterium sp.)
+Cna_KPL3649,Corynebacterium,nasorum,GCF_037908335.1,Cna_KPL3649,KPL3649,C. nasorum (previously Corynebacterium sp.)
+Cna_KPL3804,Corynebacterium,nasorum,GCF_037908315.1,Cna_KPL3804,KPL3804,C. nasorum (previously Corynebacterium sp.)
+Cna_KPL4035,Corynebacterium,nasorum,GCF_037908325.1,Cna_KPL4035,KPL4035,C. nasorum (previously Corynebacterium sp.)
+Cna_KPL4072,Corynebacterium,nasorum,GCF_037908395.1,Cna_KPL4072,KPL4072,C. nasorum (previously Corynebacterium sp.)
+Cna_MSK071,Corynebacterium,nasorum,GCF_030232125.1,Cna_MSK071,MSK071,C. nasorum (previously Corynebacterium sp.)
+Cna_MSK185,Corynebacterium,nasorum,GCF_030229765.1,Cna_MSK185,MSK185,C. nasorum (previously Corynebacterium sp.)
+Cna_MSK194,Corynebacterium,nasorum,GCF_030228925.1,Cna_MSK194,MSK194,C. nasorum (previously Corynebacterium sp.)
+Ctu_DSM_44922,Corynebacterium,tuberculostearicum,GCF_013408445.1,Ctu_DSM_44922,DSM 44922,C. tuberculostearicum
+Ctu_KPL3807,Corynebacterium,tuberculostearicum,GCF_030176495.1,Ctu_KPL3807,KPL3807,C. tuberculostearicum
+Ctu_MSK207,Corynebacterium,tuberculostearicum,GCF_030229345.1,Ctu_MSK207,MSK207,C. tuberculostearicum
+Ctu_SK141,Corynebacterium,tuberculostearicum,GCF_000175635.1,Ctu_SK141,SK141,C. tuberculostearicum
+Cyo_c21Ua_68,Corynebacterium,yonathiae,GCF_027570195.1,Cyo_c21Ua_68,c21Ua_68,C. yonathiae
+Cyo_KPL2619,Corynebacterium,yonathiae,GCF_037908465.1,Cyo_KPL2619,KPL2619,C. yonathiae
+Cyo_MSK136,Corynebacterium,yonathiae,GCF_022288805.2,Cyo_MSK136,MSK136,C. yonathiae
