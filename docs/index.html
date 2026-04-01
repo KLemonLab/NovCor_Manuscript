@@ -4639,18 +4639,35 @@ vertical-align: -.125em;
 
 <section id="introduction" class="level1 unnumbered unlisted">
 <h1 class="unnumbered unlisted">Introduction</h1>
-<p>This repository includes the code used for bioinformatics and data analysis for the manuscript <strong>“Description of <em>Corynebacterium nasorum</em> sp. nov. and <em>Corynebacterium hallucis</em> sp. nov. isolated from human nasal passages and skin”</strong>.</p>
+<p>This repository contains the code and main analysis files used for bioinformatics and data analysis for the manuscript <strong>“Description of <em>Corynebacterium nasorum</em> sp. nov. and <em>Corynebacterium hallucis</em> sp. nov. isolated from human nasal passages and skin”</strong>.</p>
 <p>A preprint of this manuscript is available at <a href="https://www.biorxiv.org/content/10.1101/2024.11.21.624533v1">bioRxiv</a>.</p>
+<section id="repository-structure" class="level2">
+<h2 class="anchored" data-anchor-id="repository-structure">Repository structure</h2>
 <ul>
-<li><p>Code for the custom Prokka annotations can be found in <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_Prokka_Annotations.html">here</a>. With the supplemental files used to list genomes included in each section of the analysis <a href="https://github.com/KLemonLab/NovCor_Manuscript/tree/main/genome_lists">here</a>.</p></li>
-<li><p>Detailed code for the <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_ANIs.html">ANI</a> and <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_dDDH.html">dDDH</a> analysis.</p></li>
-<li><p>All the code used for construction of phylogenetic and phylogenomic trees is summarized <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_Phylogenies.html">here</a>.</p></li>
-<li><p>Analysis performed using Anvio is documented in <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_Anvio.html">here</a>.</p></li>
+<li><p>Code for the custom Prokka annotations can be found in <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_Prokka_Annotations.html">here</a>.</p>
+<ul>
+<li><p>The <code>data/genomes</code> folder contains the original <code>.fasta</code> files for all genomes used in the analysis, organized in subfolders based on the figures they were used for.</p></li>
+<li><p>The <code>data/genome_lists</code> folder contains the lists of genomes used for different analyses, including the 28 proposed <em>C. nasorum</em> genomes and the 30 genomes representative of the <em>C. tuberculostearicum</em> complex.</p></li>
+</ul></li>
+<li><p>Detailed code for the <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_ANIs.html">ANI</a> and <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_dDDH.html">dDDH</a> analysis.</p>
+<ul>
+<li><p>The <code>data/pyani-plus</code> folder contains the results from the ANI analysis.</p></li>
+<li><p>The <code>data/GGDC</code> folder contains the results from the dDDH analysis.</p></li>
+</ul></li>
+<li><p>All the code used for construction of phylogenetic and phylogenomic trees is summarized <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_Phylogenies.html">here</a>.</p>
+<ul>
+<li>The <code>data/phylogenies</code> folder contains all the files related to phylogenetic and phylogenomic analyses, including alignments and tree files.</li>
+</ul></li>
+<li><p>Analysis performed using anvi’o is documented in <a href="https://klemonlab.github.io/NovCor_Manuscript/Methods_Anvio.html">here</a>.</p>
+<ul>
+<li>The <code>data/anvio-9</code> folder contains all the files related to anvi’o analyses, including contigs databases, metabolic analysis, and pangenome analysis.</li>
+</ul></li>
 </ul>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -4949,17 +4966,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction {.unnumbered .unlisted}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>This repository includes the code used for bioinformatics and data analysis for the manuscript **"Description of *Corynebacterium nasorum* sp. nov. and *Corynebacterium hallucis* sp. nov. isolated from human nasal passages and skin"**.</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>This repository contains the code and main analysis files used for bioinformatics and data analysis for the manuscript **"Description of *Corynebacterium nasorum* sp. nov. and *Corynebacterium hallucis* sp. nov. isolated from human nasal passages and skin"**.</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>A preprint of this manuscript is available at <span class="co">[</span><span class="ot">bioRxiv</span><span class="co">](https://www.biorxiv.org/content/10.1101/2024.11.21.624533v1)</span>.</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Code for the custom Prokka annotations can be found in <span class="co">[</span><span class="ot">here</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_Prokka_Annotations.html)</span>. With the supplemental files used to list genomes included in each section of the analysis <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/KLemonLab/NovCor_Manuscript/tree/main/genome_lists)</span>.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repository structure</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Detailed code for the <span class="co">[</span><span class="ot">ANI</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_ANIs.html)</span> and <span class="co">[</span><span class="ot">dDDH</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_dDDH.html)</span> analysis.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Code for the custom Prokka annotations can be found in <span class="co">[</span><span class="ot">here</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_Prokka_Annotations.html)</span>.</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>All the code used for construction of phylogenetic and phylogenomic trees is summarized <span class="co">[</span><span class="ot">here</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_Phylogenies.html)</span>.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Analysis performed using Anvio is documented in <span class="co">[</span><span class="ot">here</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_Anvio.html)</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The <span class="in">`data/genomes`</span> folder contains the original <span class="in">`.fasta`</span> files for all genomes used in the analysis, organized in subfolders based on the figures they were used for.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The <span class="in">`data/genome_lists`</span> folder contains the lists of genomes used for different analyses, including the 28 proposed *C. nasorum* genomes and the 30 genomes representative of the *C. tuberculostearicum* complex.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Detailed code for the <span class="co">[</span><span class="ot">ANI</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_ANIs.html)</span> and <span class="co">[</span><span class="ot">dDDH</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_dDDH.html)</span> analysis.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The <span class="in">`data/pyani-plus`</span> folder contains the results from the ANI analysis.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The <span class="in">`data/GGDC`</span> folder contains the results from the dDDH analysis.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>All the code used for construction of phylogenetic and phylogenomic trees is summarized <span class="co">[</span><span class="ot">here</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_Phylogenies.html)</span>.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The <span class="in">`data/phylogenies`</span> folder contains all the files related to phylogenetic and phylogenomic analyses, including alignments and tree files.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Analysis performed using anvi'o is documented in <span class="co">[</span><span class="ot">here</span><span class="co">](https://klemonlab.github.io/NovCor_Manuscript/Methods_Anvio.html)</span>.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The <span class="in">`data/anvio-9`</span> folder contains all the files related to anvi'o analyses, including contigs databases, metabolic analysis, and pangenome analysis.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
