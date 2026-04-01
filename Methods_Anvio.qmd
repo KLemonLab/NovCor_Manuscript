@@ -14,6 +14,8 @@ library(viridis)
 library(RColorBrewer)
 library(knitr)
 library(ggh4x)
+library(reshape2)
+library(seqinr)
 ```
 
 ## Set up paths
@@ -362,6 +364,17 @@ anvi-display-functions -e $txt_file \
                        --profile-db $path_o/KOfam_Cha.db
 ```
 
+### Reading results into R
+
+This allows to read the generated enrichment results for KEGG modules and KOs into R for further analysis and plotting.
+```{r}
+Enrich_Mod_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_modules/NovCor_enriched_modules_stepwise_1_Cna.txt"), show_col_types = FALSE)
+Enrich_Mod_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_modules/NovCor_enriched_modules_stepwise_1_Cna.txt"), show_col_types = FALSE)
+
+Enrich_KO_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cna.txt"), show_col_types = FALSE)
+Enrich_KO_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cha.txt"), show_col_types = FALSE)
+```
+
 ## Pangenomic level analysis
 
 This analysis using `anvio_KEGG_30_CtuComplex.txt` includes the same 30 *Corynebacterium* genomes selected for metabolic analysis.
@@ -392,14 +405,67 @@ anvi-summarize -p $path_i/pangenome/NovCor-PAN.db \
                -C CORE
 ```
 
-## Reading results into R
+### Reading results into R
+
+The `NovCor_gene_clusters_summary.txt.gz` file contains the summary of gene clusters generated in the pangenomic analysis, which can be used to explore specific gene clusters of interest based on the enrichment results.
 
 ```{r}
-Enrich_Mod_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_modules/NovCor_enriched_modules_stepwise_1_Cna.txt"), show_col_types = FALSE)
-Enrich_Mod_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_modules/NovCor_enriched_modules_stepwise_1_Cna.txt"), show_col_types = FALSE)
-
-Enrich_KO_Cna <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cna.txt"), show_col_types = FALSE)
-Enrich_KO_Cha <- read_delim(file.path(anvio_folder, "metabolic_analysis/enrichment_KOs/NovCor_enriched_KOs_Cha.txt"), show_col_types = FALSE)
-
 NovCor_PAN <- read_delim(file.path(anvio_folder, "pangenomic_analysis/summaries/NovCor_gene_clusters_summary.txt.gz"), show_col_types = FALSE)
 ```
+
+This function allows to explored the generated summary dataset for any GC of interest. It generates a subset of the dataset, a fasta file with the protein alignment and a identity percent distance matrix foe any selected GC:
+```{r}
+info_for_GC <- function(Summary, output_path, GC, gene) {
+  data <- Summary %>% 
+    filter(gene_cluster_id == GC) %>% 
+    mutate(fasta_lines = paste0(">", gene_cluster_id, "|", genome_name, "|callers_id:", gene_callers_id, "\n", aa_sequence))
+  
+  if (!file.exists(output_path)) {
+    dir.create(output_path, recursive = TRUE)
+  }
+  output_fasta <- file.path(output_path, paste0(GC, "_", gene, ".fasta"))
+  output_csv <- file.path(output_path, paste0(GC, "_", gene, ".csv"))
+  
+  writeLines(data$fasta_lines, con = output_fasta)
+  write_csv(data, file = output_csv)
+  
+  dist = dist.alignment(read.alignment(output_fasta,"fasta"), matrix = "identity")
+  mat <- 100*(1 - dist^2) # convert to identity percent since the dist matrix contains the squared root of the pairwise distances
+  mat <- as.matrix(mat)
+  df <- melt(mat)
+  df$value <- as.numeric(df$value)
+  df$Var1 <- sub(".*\\|(.*?)\\|.*", "\\1", df$Var1)
+  df$Var2 <- sub(".*\\|(.*?)\\|.*", "\\1", df$Var2)
+  
+  if (nrow(df) > 1) {
+    plot <- ggplot(df, aes(x = Var1, y = Var2, fill = value)) + 
+      geom_tile() +
+      scale_fill_viridis(direction = -1, option = "A", begin = 0.2, limits = c(40, 100), na.value = 'white') +
+      labs(x = "", y = "") +
+      scale_y_discrete(expand = c(0,0), position = "right") +
+      scale_x_discrete(expand = c(0,0)) +
+      theme_bw() +
+      theme(axis.text.x = element_markdown(angle = 45, hjust = 1, size = 6),
+            axis.text.y = element_markdown(size = 6))
+    
+    output_plot <- file.path(output_path, paste0(GC, "_", gene, ".jpg"))
+    ggsave(plot, filename = output_plot, height = 20, width = 20, device = 'jpg', dpi = 600)
+  }
+
+  num_seqs <- nrow(data)
+  num_genomes <- data$num_genomes_gene_cluster_has_hits[1]
+  protein_id <- ifelse("Cgl_ATCC_13032" %in% data$genome_name, data$accession[data$genome_name == "Cgl_ATCC_13032"][1], NA)
+  KO <- ifelse("Cgl_ATCC_13032" %in% data$genome_name, data$KOfam_ACC[data$genome_name == "Cgl_ATCC_13032"][1], NA)
+  index <- data$combined_homogeneity_index[1]
+  
+  cat(protein_id, gene, GC, KO, "has", num_seqs, "aa sequences across", num_genomes, "genomes with", index ,"combined homogeneity. \n")
+}
+```
+
+```{r}
+output_path <- file.path(anvio_folder, "pangenomic_analysis/individual_GCs")
+
+info_for_GC(NovCor_PAN, output_path, "GC_00002114", "YncB")
+info_for_GC(NovCor_PAN, output_path, "GC_00002607", "nagB")
+```
+

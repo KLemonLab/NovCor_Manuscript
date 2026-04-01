@@ -15,7 +15,6 @@ This document lists all R packages used across all analysis notebooks in this re
 #| warning: FALSE
 #| message: FALSE
 
-# Core data manipulation and visualization
 library(tidyverse)      # Data manipulation and ggplot2
 library(ggtext)         # Markdown text in ggplot2
 library(viridis)        # Color palettes
@@ -25,6 +24,8 @@ library(ggh4x)          # Extensions for ggplot2
 library(cowplot)        # Plot arrangement
 library(png)            # Reading PNG images
 library(grid)           # Grid graphics
+library(reshape2)       # Data reshaping
+library(seqinr)         # Reading and writing FASTA files
 ```
 
 ## Session Information
