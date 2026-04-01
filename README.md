@@ -7,7 +7,7 @@ A preprint of this manuscript is available at [bioRxiv](https://www.biorxiv.org/
 
 See [NovCor_Manuscript](https://klemonlab.github.io/NovCor_Manuscript/) for the rendered version of the code and analysis notebooks, which are organized by method and analysis type. 
 
-The `data/` folder contains all the files related to the analyses performed for the manuscript, organized in subfolders based on the different analyses. The main analyses include:
+The `data/` folder contains all the files related to the analyses performed for the manuscript. The main analyses include:
 
 -   Code for the custom Prokka annotations can be found in [here](https://klemonlab.github.io/NovCor_Manuscript/Methods_Prokka_Annotations.html).
 

@@ -4,6 +4,8 @@ This repository contains the code and main analysis files used for bioinformatic
 
 A preprint of this manuscript is available at [bioRxiv](https://www.biorxiv.org/content/10.1101/2024.11.21.624533v1).
 
+The `data/` folder contains all the files related to the analyses performed for the manuscript and is available at [this GitHub repository](https://github.com/KLemonLab/NovCor_Manuscript)
+
 ## Repository structure
 
 -   Code for the custom Prokka annotations can be found in [here](https://klemonlab.github.io/NovCor_Manuscript/Methods_Prokka_Annotations.html).

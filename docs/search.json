@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Description of Corynebacterium nasorum sp. nov. and Corynebacterium hallucis sp. nov. isolated from human nasal passages and skin",
     "section": "",
-    "text": "Introduction\nThis repository contains the code and main analysis files used for bioinformatics and data analysis for the manuscript “Description of Corynebacterium nasorum sp. nov. and Corynebacterium hallucis sp. nov. isolated from human nasal passages and skin”.\nA preprint of this manuscript is available at bioRxiv."
+    "text": "Introduction\nThis repository contains the code and main analysis files used for bioinformatics and data analysis for the manuscript “Description of Corynebacterium nasorum sp. nov. and Corynebacterium hallucis sp. nov. isolated from human nasal passages and skin”.\nA preprint of this manuscript is available at bioRxiv.\nThe data/ folder contains all the files related to the analyses performed for the manuscript and is available at this GitHub repository"
   },
   {
     "objectID": "index.html#repository-structure",
