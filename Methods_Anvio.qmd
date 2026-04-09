@@ -113,7 +113,7 @@ done
 
 ### CAZyme Annotation
 
-First you need to download and set up the CAZyme database [@drula2021] using `anvi-setup-cazymes`: this is something you will do only once. We used Pfam version 12.
+First you need to download and set up the CAZyme database [@drula2021] using `anvi-setup-cazymes`: this is something you will do only once. We used CAZyme version 12.
 
 The program `anvi-run-cazymes` annotates genes in your contigs-db with the dbCAN CAZyme database.
 
@@ -308,8 +308,8 @@ plot
 
 The `NovCor_modules.txt` file generated in the previous step is used by `anvi-compute-metabolic-enrichment` to calculate KEGG module enrichment[@shaiber2020] across different groups of genomes. We used the `-G` flag to indicate the following grouping options:
 
--   Enriched KEGG modules in *Corynebacterium nasorum* versus other *Corynebacterium tuberculostearicum* complex genomes.
--   Enriched KEGG modules in *Corynebacterium hallucis* versus other *Corynebacterium tuberculostearicum* complex genomes.
+-   Enriched KEGG modules in *Corynebacterium nasorum* versus other *Corynebacterium tuberculostearicum* species complex genomes.
+-   Enriched KEGG modules in *Corynebacterium hallucis* versus other *Corynebacterium tuberculostearicum* species complex genomes.
 
 ```{bash, eval=FALSE}
 conda deactivate
@@ -340,8 +340,8 @@ anvi-compute-metabolic-enrichment -M "$csv_file_modules" \
 
 We use `anvi-display-functions`[@shaiber2020]. It runs the enrichment for the desired annotations (in this case KOfam). It saves the output to a temp file that can be recovered, renamed and saved into the same `path_o` as the database file.
 
--   **Table S6.** Enriched KOs in *Corynebacterium nasorum* versus other *Corynebacterium tuberculostearicum* complex genomes.
--   **Table S7.** Enriched KOs in *Corynebacterium hallucis*  versus other *Corynebacterium tuberculostearicum* complex genomes.
+-   **Table S6.** Enriched KOs in *Corynebacterium nasorum* versus other *Corynebacterium tuberculostearicum* species complex genomes.
+-   **Table S7.** Enriched KOs in *Corynebacterium hallucis*  versus other *Corynebacterium tuberculostearicum* species complex genomes.
 
 ```{bash, eval=FALSE}
 conda deactivate

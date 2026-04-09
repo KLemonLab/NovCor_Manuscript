@@ -26,7 +26,7 @@ ggdc_folder <- file.path(FOLDER_PATH, "GGDC")
 
 ## Run dDDH
 
-Pairwise comparisons were performed using the online Genome-to-Genome Distance Calculator ([GGDC](https://ggdc.dsmz.de/ggdc.php))[@meier-kolthoff2021; @meier-kolthoff2013] with default parameters (BLAST+[@camacho2009]) for the 28 proposed *Corynebacterium nasorum* genomes and for the 30 genomes in the *Corynebacterium tuberculostearicum* complex.
+Pairwise comparisons were performed using the online Genome-to-Genome Distance Calculator ([GGDC](https://ggdc.dsmz.de/ggdc.php))[@meier-kolthoff2021; @meier-kolthoff2013] with default parameters (BLAST+[@camacho2009]) for the 28 proposed *Corynebacterium nasorum* genomes and for the 30 genomes in the *Corynebacterium tuberculostearicum* species complex.
 
 Each file in the `ggdc_folder` contains the results for one query genome against all reference genomes. We read and combined these files into a single data frame with formula 2 results. We then join this data frame with the `StrainOrder` data frame to add the styled genome names and specify the order of the levels for plotting.
 
@@ -137,7 +137,7 @@ pdDDH_28 <- plot_DDH(dDDH_28)
 pdDDH_30 <- plot_DDH(dDDH_30)
 ```
 
-Function to add colored rectangles to the plot, which we will use to highlight the different species groups in the *C. tuberculostearicum* complex.
+Function to add colored rectangles to the plot, which we will use to highlight the different species groups in the *C. tuberculostearicum* species complex.
 
 ```{r}
 add_rectangles_to_heatmap <- function(plot, levels, top, bottom, color) {

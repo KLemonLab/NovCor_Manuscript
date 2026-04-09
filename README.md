@@ -13,7 +13,7 @@ The `data/` folder contains all the files related to the analyses performed for 
 
     -   The `data/genomes` folder contains the original `.fasta` files for all genomes used in the analysis, organized in subfolders based on the figures they were used for.
     
-    -   The `data/genome_lists` folder contains the lists of genomes used for different analyses, including the 28 proposed *C. nasorum* genomes and the 30 genomes representative of the *C. tuberculostearicum* complex.
+    -   The `data/genome_lists` folder contains the lists of genomes used for different analyses, including the 28 proposed *C. nasorum* genomes and the 30 genomes representative of the *C. tuberculostearicum* species complex.
 
 -   Detailed code for the [ANI](https://klemonlab.github.io/NovCor_Manuscript/Methods_ANIs.html) and [dDDH](https://klemonlab.github.io/NovCor_Manuscript/Methods_dDDH.html) analysis.
 

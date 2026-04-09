@@ -35,7 +35,7 @@ if (!dir.exists(ani_folder)) {
 
 ## Run pyani-plus
 
-We used [pyani-plus](https://pyani-plus.github.io/pyani-plus-docs/)[@pritchard2016] to calculate the ANIb (BLAST+[@camacho2009]) values for the 28 proposed *Corynebacterium nasorum* genomes and for the 30 genomes in the *Corynebacterium tuberculostearicum* complex. We first activate the pyani-plus conda environment and source the `.bash_env` file to set up the environment variables.
+We used [pyani-plus](https://pyani-plus.github.io/pyani-plus-docs/)[@pritchard2016] to calculate the ANIb (BLAST+[@camacho2009]) values for the 28 proposed *Corynebacterium nasorum* genomes and for the 30 genomes in the *Corynebacterium tuberculostearicum* species complex. We first activate the pyani-plus conda environment and source the `.bash_env` file to set up the environment variables.
 
 ```{bash, eval=FALSE}
 conda deactivate
@@ -54,7 +54,7 @@ pyani-plus anib $path_i/ --database $path_o/NovCor_28_Cna.db --name "NovCor_28_C
 pyani-plus plot-run --database $path_o/NovCor_28_Cna.db --outdir $path_o/NovCor_28_Cna/ 
 ```
 
-#### ANIb for the 30 genomes in the *C. tuberculostearicum* complex
+#### ANIb for the 30 genomes in the *C. tuberculostearicum* species complex
 
 ```{bash, eval=FALSE}
 path_i="$DATA_PATH/genomes/fasta_30_CtuComplex"
@@ -138,7 +138,7 @@ pANI_28 <- plot_ani(ANI_data_28, file.path(genomes_list_folder, "ANI_PlotOrder_2
 pANI_30 <- plot_ani(ANI_data_30, file.path(genomes_list_folder, "ANI_PlotOrder_30_CtuComplex_styled.csv"))
 ```
 
-Function to add colored rectangles to the plot, which we will use to highlight the different species groups in the *C. tuberculostearicum* complex.
+Function to add colored rectangles to the plot, which we will use to highlight the different species groups in the *C. tuberculostearicum* species complex.
 
 ```{r}
 add_rectangles_to_heatmap <- function(plot, levels, top, bottom, color) {
