@@ -21,7 +21,7 @@ The `data/` folder contains all the files related to the analyses performed for 
 
     -   The `data/GGDC` folder contains the results from the dDDH analysis.
 
--   All the code used for construction of phylogenetic and phylogenomic trees is summarized [here](https://klemonlab.github.io/NovCor_Manuscript/Methods_Phylogenies.html).
+-   Most relevant data relative to construction of phylogenetic and phylogenomic trees:
 
     -   The `data/phylogenies` folder contains all the files related to phylogenetic and phylogenomic analyses, including alignments and tree files.
 
